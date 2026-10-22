@@ -37,9 +37,7 @@ export function MilestoneTaskItem({
           <button
             type="button"
             onClick={() => onToggleComplete(task.id)}
-            aria-label={`Mark task "${task.title}" as ${
-              task.completed ? 'pending' : 'complete'
-            }`}
+            aria-label={`Mark task "${task.title}" as ${task.completed ? 'pending' : 'complete'}`}
             className="mt-0.5 rounded-full p-1 text-accent hover:bg-accent-subtle transition-colors focus-visible:ring-2 focus-visible:ring-accent"
           >
             {task.completed ? (
@@ -56,9 +54,7 @@ export function MilestoneTaskItem({
             >
               {task.title}
             </h4>
-            <p className="mt-1 text-xs text-ink-muted leading-relaxed">
-              {task.description}
-            </p>
+            <p className="mt-1 text-xs text-ink-muted leading-relaxed">{task.description}</p>
           </div>
         </div>
 

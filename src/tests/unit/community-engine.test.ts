@@ -19,7 +19,9 @@ describe('Community Engine - Capacity, Volunteers & Permits', () => {
     const unsafeMetrics = calculateCrowdCapacityMetrics(5000, 1000);
     expect(unsafeMetrics.densitySqFtPerGuest).toBe(5);
     expect(unsafeMetrics.safetyStatus).toBe('Exceeds Safety Threshold');
-    expect(unsafeMetrics.recommendations.some((r) => r.includes('CRITICAL OVERCROWDING'))).toBe(true);
+    expect(unsafeMetrics.recommendations.some((r) => r.includes('CRITICAL OVERCROWDING'))).toBe(
+      true
+    );
   });
 
   it('calculates volunteer coverage and identifies shift deficits', () => {

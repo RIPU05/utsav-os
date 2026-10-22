@@ -31,9 +31,7 @@ export default function WorkspacePage(): React.ReactElement {
           <div className="p-3 rounded-2xl bg-accent-subtle text-accent mb-4">
             <Sparkles className="h-8 w-8" aria-hidden="true" />
           </div>
-          <h1 className="font-serif font-black text-2xl text-ink">
-            No Active Plan Loaded
-          </h1>
+          <h1 className="font-serif font-black text-2xl text-ink">No Active Plan Loaded</h1>
           <p className="mt-2 text-xs sm:text-sm text-ink-muted leading-relaxed">
             Create an event plan or select one from our curated preset model library.
           </p>

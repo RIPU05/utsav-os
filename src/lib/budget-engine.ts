@@ -79,10 +79,7 @@ export interface BudgetSummary {
  * @returns {BudgetSummary} Complete fiscal ledger calculation including breakdown and variance alerts.
  * @throws {never} Handles missing or malformed inputs with safe defaults.
  */
-export function calculateBudgetSummary(
-  budget: BudgetPlan,
-  totalBudget: number
-): BudgetSummary {
+export function calculateBudgetSummary(budget: BudgetPlan, totalBudget: number): BudgetSummary {
   const safeTotalBudget = Math.max(0, totalBudget);
   const categories = budget?.categories || [];
 
@@ -119,9 +116,7 @@ export function calculateBudgetSummary(
     const varianceAmount = spent > 0 ? spent - target : 0;
 
     if (isOverCap && cap !== undefined) {
-      varianceAlerts.push(
-        `Category "${cat.name}" target (${target}) exceeds hard cap of ${cap}.`
-      );
+      varianceAlerts.push(`Category "${cat.name}" target (${target}) exceeds hard cap of ${cap}.`);
     }
     if (varianceAmount > 0) {
       varianceAlerts.push(

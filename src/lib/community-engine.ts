@@ -4,11 +4,7 @@
  * and NFPA 101 / National Building Code crowd density assessments.
  */
 
-import {
-  CommunityPermit,
-  VolunteerShift,
-  CapacityMetrics,
-} from './schemas';
+import { CommunityPermit, VolunteerShift, CapacityMetrics } from './schemas';
 
 /**
  * Diagnostic summary of volunteer staffing coverage across all shifts.
@@ -59,7 +55,8 @@ export function calculateCrowdCapacityMetrics(
   const safeArea = Math.max(0, venueAreaSqFt);
   const guests = Math.max(1, plannedGuestCount);
 
-  const maxSafeOccupancy = safeArea > 0 ? Math.floor(safeArea / SQFT_PER_ATTENDEE_STANDARD) : guests;
+  const maxSafeOccupancy =
+    safeArea > 0 ? Math.floor(safeArea / SQFT_PER_ATTENDEE_STANDARD) : guests;
   const densitySqFtPerGuest = safeArea > 0 ? Math.round((safeArea / guests) * 10) / 10 : 15;
 
   let safetyStatus: 'Safe' | 'Nearing Capacity' | 'Exceeds Safety Threshold' = 'Safe';
@@ -73,13 +70,17 @@ export function calculateCrowdCapacityMetrics(
     recommendations.push(
       'Enforce staggered time entry slots or secure overflow outdoor lawn space immediately.'
     );
-    recommendations.push('Double the number of designated emergency exit paths and station crowd marshals at all gates.');
+    recommendations.push(
+      'Double the number of designated emergency exit paths and station crowd marshals at all gates.'
+    );
   } else if (densitySqFtPerGuest < 15 || (safeArea > 0 && guests > maxSafeOccupancy)) {
     safetyStatus = 'Nearing Capacity';
     recommendations.push(
       `High Density Notice: Venue is approaching maximum safe threshold (${densitySqFtPerGuest} sq.ft/guest).`
     );
-    recommendations.push('Designate dedicated entry/exit one-way flow lanes to prevent bottlenecking.');
+    recommendations.push(
+      'Designate dedicated entry/exit one-way flow lanes to prevent bottlenecking.'
+    );
   } else {
     safetyStatus = 'Safe';
     recommendations.push(
@@ -123,7 +124,8 @@ export function calculateVolunteerStaffing(shifts: VolunteerShift[]): VolunteerS
   }
 
   const unfilledSlots = Math.max(0, totalRequired - totalAssigned);
-  const readinessPercent = totalRequired > 0 ? Math.min(100, Math.round((totalAssigned / totalRequired) * 100)) : 100;
+  const readinessPercent =
+    totalRequired > 0 ? Math.min(100, Math.round((totalAssigned / totalRequired) * 100)) : 100;
 
   return {
     totalRequired,
@@ -152,7 +154,9 @@ export function calculatePermitReadiness(
 
   const today = new Date();
   const eventDateObj = new Date(eventDate);
-  const daysUntilEvent = Math.round((eventDateObj.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+  const daysUntilEvent = Math.round(
+    (eventDateObj.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+  );
 
   for (const permit of permits) {
     if (permit.status === 'Approved' || permit.status === 'Exempt') {
@@ -168,7 +172,8 @@ export function calculatePermitReadiness(
   }
 
   const totalPermits = permits.length;
-  const readinessPercent = totalPermits > 0 ? Math.round((approvedCount / totalPermits) * 100) : 100;
+  const readinessPercent =
+    totalPermits > 0 ? Math.round((approvedCount / totalPermits) * 100) : 100;
 
   return {
     totalPermits,

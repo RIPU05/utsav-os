@@ -30,9 +30,7 @@ export function VendorPipelineCard({
   currency,
   onStatusChange,
 }: VendorPipelineCardProps): React.ReactElement {
-  const contractAnalysis = analyzeContractTerms(
-    vendor.contractTermsSummary || vendor.notes || ''
-  );
+  const contractAnalysis = analyzeContractTerms(vendor.contractTermsSummary || vendor.notes || '');
 
   const handleStatusSelect = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     onStatusChange(vendor.id, e.target.value as VendorStatus);
@@ -42,8 +40,8 @@ export function VendorPipelineCard({
     contractAnalysis.score >= 80
       ? 'text-state-success'
       : contractAnalysis.score >= 40
-      ? 'text-state-warning'
-      : 'text-state-error';
+        ? 'text-state-warning'
+        : 'text-state-error';
 
   return (
     <div className="rounded-2xl border border-rule bg-paper-card p-6 shadow-xs flex flex-col justify-between">
@@ -52,9 +50,7 @@ export function VendorPipelineCard({
         <div className="flex items-start justify-between gap-3 mb-2">
           <div className="flex items-center gap-2">
             <Building className="h-4 w-4 text-accent" aria-hidden="true" />
-            <h3 className="font-serif font-black text-base text-ink">
-              {vendor.categoryName}
-            </h3>
+            <h3 className="font-serif font-black text-base text-ink">{vendor.categoryName}</h3>
           </div>
           <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-accent-subtle text-accent border border-accent/30">
             <ShieldAlert className="h-3 w-3" aria-hidden="true" />
@@ -73,9 +69,7 @@ export function VendorPipelineCard({
               Agreed Quote / Bid
             </span>
             <span className="text-xs font-mono font-bold text-ink">
-              {vendor.quoteAmount
-                ? formatCurrency(vendor.quoteAmount, currency)
-                : 'Pending Quote'}
+              {vendor.quoteAmount ? formatCurrency(vendor.quoteAmount, currency) : 'Pending Quote'}
             </span>
           </div>
           <div>
@@ -116,9 +110,7 @@ export function VendorPipelineCard({
           {contractAnalysis.missingClauses.length > 0 && (
             <div>
               <span className="font-semibold text-state-warning">Missing Clauses: </span>
-              <span className="text-ink-muted">
-                {contractAnalysis.missingClauses.join(', ')}
-              </span>
+              <span className="text-ink-muted">{contractAnalysis.missingClauses.join(', ')}</span>
             </div>
           )}
         </div>

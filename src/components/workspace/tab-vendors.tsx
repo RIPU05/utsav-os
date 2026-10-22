@@ -63,13 +63,9 @@ export function TabVendors(): React.ReactElement | null {
               <span className="text-[11px] font-mono uppercase text-ink-muted block">
                 {stage} Pipeline
               </span>
-              <div className="font-serif text-2xl font-bold text-ink mt-0.5">
-                {count}
-              </div>
+              <div className="font-serif text-2xl font-bold text-ink mt-0.5">{count}</div>
               <span className="text-[11px] text-ink-faint mt-1 block">
-                {stage === 'Signed' || stage === 'Paid'
-                  ? 'Legally Committed'
-                  : 'Discovery Phase'}
+                {stage === 'Signed' || stage === 'Paid' ? 'Legally Committed' : 'Discovery Phase'}
               </span>
             </button>
           );
@@ -85,8 +81,10 @@ export function TabVendors(): React.ReactElement | null {
               Vendor Screening &amp; Contract Procurement Protocol
             </h2>
             <p className="mt-1 text-xs sm:text-sm text-ink-muted leading-relaxed">
-              Track vendor lifecycle across the 4-stage procurement pipeline: <strong>Lead &rarr; Quoted &rarr; Signed &rarr; Paid</strong>.
-              Review key questions and analyze contract terms to ensure critical cancellation, overtime, and indemnity clauses are verified before signing.
+              Track vendor lifecycle across the 4-stage procurement pipeline:{' '}
+              <strong>Lead &rarr; Quoted &rarr; Signed &rarr; Paid</strong>. Review key questions
+              and analyze contract terms to ensure critical cancellation, overtime, and indemnity
+              clauses are verified before signing.
             </p>
           </div>
         </div>

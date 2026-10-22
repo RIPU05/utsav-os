@@ -128,8 +128,8 @@ export function TabOverview(): React.ReactElement | null {
             {isCommunity && permitReport
               ? `${permitReport.readinessPercent}%`
               : activePlan.capacity
-              ? `${activePlan.capacity.densitySqFtPerGuest} sq.ft`
-              : 'Safe'}
+                ? `${activePlan.capacity.densitySqFtPerGuest} sq.ft`
+                : 'Safe'}
           </div>
           <div className="mt-2 text-xs flex items-center justify-between text-ink-muted">
             <span>{isCommunity ? 'Approved Permits:' : 'Guest Allocation:'}</span>
@@ -158,9 +158,7 @@ export function TabOverview(): React.ReactElement | null {
               <Sparkles className="h-4 w-4" aria-hidden="true" />
               <span>Host Vision &amp; Style Directive</span>
             </div>
-            <h2 className="font-serif font-black text-xl text-ink">
-              {activePlan.styleCulture}
-            </h2>
+            <h2 className="font-serif font-black text-xl text-ink">{activePlan.styleCulture}</h2>
             {activePlan.nonNegotiables && (
               <p className="mt-2 text-xs sm:text-sm text-ink-muted leading-relaxed">
                 <strong>Non-Negotiable Priorities:</strong> {activePlan.nonNegotiables}
@@ -183,9 +181,7 @@ export function TabOverview(): React.ReactElement | null {
         {/* Next Urgent Milestones */}
         <div className="rounded-2xl border border-rule bg-paper-card p-6 shadow-xs">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-serif font-bold text-lg text-ink">
-              Upcoming Deadlines
-            </h3>
+            <h3 className="font-serif font-bold text-lg text-ink">Upcoming Deadlines</h3>
             <button
               type="button"
               onClick={() => setActiveTab('timeline')}
@@ -202,7 +198,9 @@ export function TabOverview(): React.ReactElement | null {
               >
                 <div>
                   <h4 className="text-xs font-bold text-ink">{task.title}</h4>
-                  <span className="text-[11px] text-ink-muted">Due {task.dueDate} &bull; {task.owner}</span>
+                  <span className="text-[11px] text-ink-muted">
+                    Due {task.dueDate} &bull; {task.owner}
+                  </span>
                 </div>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-accent-subtle text-accent">
                   {task.phase}

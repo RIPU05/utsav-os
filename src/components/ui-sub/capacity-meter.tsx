@@ -26,8 +26,8 @@ export function CapacityMeter({ capacityMetrics }: CapacityMeterProps): React.Re
   const statusColorClass = isSafe
     ? 'text-state-success'
     : isWarning
-    ? 'text-state-warning'
-    : 'text-state-error';
+      ? 'text-state-warning'
+      : 'text-state-error';
 
   return (
     <div className="rounded-2xl border border-rule bg-paper-card p-6 shadow-xs">

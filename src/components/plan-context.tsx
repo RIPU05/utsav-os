@@ -6,14 +6,7 @@ import { SAVED_EXAMPLES } from '@/data/saved-examples';
 import { reflowTimelineDates } from '@/lib/timeline-engine';
 
 export type WorkspaceTab =
-  | 'overview'
-  | 'budget'
-  | 'timeline'
-  | 'vendors'
-  | 'community'
-  | 'creative'
-  | 'risks'
-  | 'history';
+  'overview' | 'budget' | 'timeline' | 'vendors' | 'community' | 'creative' | 'risks' | 'history';
 
 interface PlanContextType {
   activePlan: EventPlan | null;
@@ -91,26 +84,23 @@ export function PlanProvider({ children }: PlanProviderProps): React.ReactElemen
   }, []);
 
   // Sync to localStorage
-  const setActivePlan = useCallback(
-    (newPlan: EventPlan, addToHistory = true) => {
-      setActivePlanState((prev) => {
-        if (prev && addToHistory && prev.id === newPlan.id) {
-          setPlanHistory((h) => {
-            const updated = [prev, ...h.slice(0, 9)];
-            try {
-              localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updated));
-            } catch {}
-            return updated;
-          });
-        }
-        try {
-          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newPlan));
-        } catch {}
-        return newPlan;
-      });
-    },
-    []
-  );
+  const setActivePlan = useCallback((newPlan: EventPlan, addToHistory = true) => {
+    setActivePlanState((prev) => {
+      if (prev && addToHistory && prev.id === newPlan.id) {
+        setPlanHistory((h) => {
+          const updated = [prev, ...h.slice(0, 9)];
+          try {
+            localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updated));
+          } catch {}
+          return updated;
+        });
+      }
+      try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newPlan));
+      } catch {}
+      return newPlan;
+    });
+  }, []);
 
   const undoLastChange = useCallback(() => {
     if (planHistory.length === 0) return;
@@ -182,7 +172,7 @@ export function PlanProvider({ children }: PlanProviderProps): React.ReactElemen
             quoteAmount: quoteAmount !== undefined ? quoteAmount : v.quoteAmount,
             contractedAmount:
               status === 'Signed' || status === 'Paid'
-                ? quoteAmount ?? v.contractedAmount ?? v.quoteAmount
+                ? (quoteAmount ?? v.contractedAmount ?? v.quoteAmount)
                 : v.contractedAmount,
           };
         }

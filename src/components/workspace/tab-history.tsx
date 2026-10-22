@@ -23,7 +23,8 @@ export function TabHistory(): React.ReactElement | null {
             Version History &amp; Reversion Stack
           </h2>
           <p className="text-xs text-ink-muted mt-0.5">
-            Every budget rebalance, date shift, or major mutation creates an immutable version checkpoint.
+            Every budget rebalance, date shift, or major mutation creates an immutable version
+            checkpoint.
           </p>
         </div>
         {planHistory.length > 0 && (
@@ -48,11 +49,10 @@ export function TabHistory(): React.ReactElement | null {
             Updated: {new Date(activePlan.updatedAt).toLocaleString()}
           </span>
         </div>
-        <h3 className="font-serif font-bold text-base text-ink mt-2">
-          {activePlan.title}
-        </h3>
+        <h3 className="font-serif font-bold text-base text-ink mt-2">{activePlan.title}</h3>
         <p className="text-xs text-ink-muted mt-1">
-          {activePlan.guestCount} Guests &bull; {activePlan.timeline.length} Milestones &bull; {activePlan.vendors.length} Vendors
+          {activePlan.guestCount} Guests &bull; {activePlan.timeline.length} Milestones &bull;{' '}
+          {activePlan.vendors.length} Vendors
         </p>
       </div>
 
@@ -63,7 +63,8 @@ export function TabHistory(): React.ReactElement | null {
         </h3>
         {planHistory.length === 0 ? (
           <div className="p-8 text-center border border-rule rounded-2xl bg-paper-card text-ink-muted text-xs">
-            No previous checkpoints recorded. Modify the budget, dates, or vendor statuses to build version history.
+            No previous checkpoints recorded. Modify the budget, dates, or vendor statuses to build
+            version history.
           </div>
         ) : (
           planHistory.map((historicalPlan, idx) => (
@@ -76,9 +77,7 @@ export function TabHistory(): React.ReactElement | null {
                   <span className="font-mono font-bold text-xs text-ink">
                     v{historicalPlan.version}
                   </span>
-                  <span className="text-xs font-medium text-ink-muted">
-                    {historicalPlan.title}
-                  </span>
+                  <span className="text-xs font-medium text-ink-muted">{historicalPlan.title}</span>
                 </div>
                 <span className="text-[11px] font-mono text-ink-faint block mt-0.5">
                   Saved at {new Date(historicalPlan.updatedAt).toLocaleString()}

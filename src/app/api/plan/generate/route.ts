@@ -98,7 +98,10 @@ export async function POST(request: Request): Promise<NextResponse | Response> {
 
     // Default volunteer shifts if community event
     let volunteerShifts = aiOutput.volunteerShifts;
-    if (intake.eventType === 'Community Event' && (!volunteerShifts || volunteerShifts.length === 0)) {
+    if (
+      intake.eventType === 'Community Event' &&
+      (!volunteerShifts || volunteerShifts.length === 0)
+    ) {
       volunteerShifts = [
         {
           id: 'vshift-1',

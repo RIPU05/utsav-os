@@ -26,13 +26,8 @@ import {
  * @returns {React.ReactElement | null} The rendered timeline tab screen.
  */
 export function TabTimeline(): React.ReactElement | null {
-  const {
-    activePlan,
-    toggleTaskCompletion,
-    updateEventDate,
-    dateReflowNotice,
-    announce,
-  } = usePlan();
+  const { activePlan, toggleTaskCompletion, updateEventDate, dateReflowNotice, announce } =
+    usePlan();
 
   const [viewMode, setViewMode] = useState<'milestones' | 'dayOf'>('milestones');
   const [newEventDateInput, setNewEventDateInput] = useState(activePlan?.date || '');
@@ -89,7 +84,8 @@ export function TabTimeline(): React.ReactElement | null {
               Interactive Timeline &amp; Day-of Scheduler
             </h2>
             <p className="text-xs text-ink-muted mt-0.5">
-              Dual view: long-term milestone planning and minute-by-minute day-of schedules with automated collision detection.
+              Dual view: long-term milestone planning and minute-by-minute day-of schedules with
+              automated collision detection.
             </p>
           </div>
 
@@ -181,9 +177,7 @@ export function TabTimeline(): React.ReactElement | null {
           <div className="flex items-start gap-3">
             <AlertTriangle className="h-5 w-5 shrink-0 mt-0.5" aria-hidden="true" />
             <div>
-              <h3 className="font-bold text-sm">
-                Schedule Conflict &amp; Bottleneck Warnings
-              </h3>
+              <h3 className="font-bold text-sm">Schedule Conflict &amp; Bottleneck Warnings</h3>
               <ul className="mt-1 list-disc list-inside space-y-1 text-xs">
                 {timelineConflicts.map((c, i) => (
                   <li key={`tc-${i}`}>{c.message}</li>
@@ -208,7 +202,10 @@ export function TabTimeline(): React.ReactElement | null {
               <section key={phase} aria-labelledby={`phase-title-${phase}`}>
                 <div className="sticky top-0 z-10 py-2.5 bg-paper/95 backdrop-blur-xs flex items-center gap-3">
                   <span className="h-3 w-3 rounded-full bg-accent ring-4 ring-accent-subtle" />
-                  <h3 id={`phase-title-${phase}`} className="font-serif font-black text-lg text-ink">
+                  <h3
+                    id={`phase-title-${phase}`}
+                    className="font-serif font-black text-lg text-ink"
+                  >
                     {phase}
                   </h3>
                   <span className="text-xs font-mono text-ink-muted">

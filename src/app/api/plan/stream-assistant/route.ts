@@ -51,9 +51,7 @@ export async function POST(request: Request): Promise<Response> {
           controller.close();
         } catch (streamErr) {
           const errMessage = streamErr instanceof Error ? streamErr.message : 'Streaming error';
-          controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify({ error: errMessage })}\n\n`)
-          );
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: errMessage })}\n\n`));
           controller.close();
         }
       },

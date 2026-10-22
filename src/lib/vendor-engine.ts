@@ -106,11 +106,26 @@ export function analyzeContractTerms(termsText: string): {
   const termsLower = (termsText || '').toLowerCase();
 
   const standardClauses = [
-    { name: 'Cancellation & Refund Terms', keywords: ['cancellation', 'refund', 'deposit refund', 'cooling off'] },
-    { name: 'Force Majeure & Weather Acts', keywords: ['force majeure', 'acts of god', 'weather contingency', 'unforeseen'] },
-    { name: 'Overtime & Excess Hours Rate', keywords: ['overtime', 'hourly rate', 'extra hour', 'delay fee'] },
-    { name: 'Liability & Damage Insurance', keywords: ['liability', 'indemnity', 'damage', 'insurance'] },
-    { name: 'Deliverables & Completion Timetable', keywords: ['deliverables', 'completion', 'handover', 'schedule', 'timetable'] },
+    {
+      name: 'Cancellation & Refund Terms',
+      keywords: ['cancellation', 'refund', 'deposit refund', 'cooling off'],
+    },
+    {
+      name: 'Force Majeure & Weather Acts',
+      keywords: ['force majeure', 'acts of god', 'weather contingency', 'unforeseen'],
+    },
+    {
+      name: 'Overtime & Excess Hours Rate',
+      keywords: ['overtime', 'hourly rate', 'extra hour', 'delay fee'],
+    },
+    {
+      name: 'Liability & Damage Insurance',
+      keywords: ['liability', 'indemnity', 'damage', 'insurance'],
+    },
+    {
+      name: 'Deliverables & Completion Timetable',
+      keywords: ['deliverables', 'completion', 'handover', 'schedule', 'timetable'],
+    },
   ];
 
   const foundClauses: string[] = [];
@@ -166,9 +181,8 @@ export function compareVendorQuotes(
   }
 
   const evaluated = quotes.map((q) => {
-    const variancePercent = allocatedBudget > 0
-      ? Math.round(((q.amount - allocatedBudget) / allocatedBudget) * 100)
-      : 0;
+    const variancePercent =
+      allocatedBudget > 0 ? Math.round(((q.amount - allocatedBudget) / allocatedBudget) * 100) : 0;
     const { score } = analyzeContractTerms(q.terms);
     return {
       bidder: q.bidder,
@@ -182,9 +196,10 @@ export function compareVendorQuotes(
   evaluated.sort((a, b) => b.compositeScore - a.compositeScore);
   const best = evaluated[0];
 
-  const varianceSummary = best.variancePercent <= 0
-    ? `${best.bidder} is within allocated category budget (${Math.abs(best.variancePercent)}% under target).`
-    : `${best.bidder} exceeds category target by ${best.variancePercent}%, but offers strong contract safety.`;
+  const varianceSummary =
+    best.variancePercent <= 0
+      ? `${best.bidder} is within allocated category budget (${Math.abs(best.variancePercent)}% under target).`
+      : `${best.bidder} exceeds category target by ${best.variancePercent}%, but offers strong contract safety.`;
 
   return {
     recommendedBidder: best.bidder,

@@ -44,7 +44,8 @@ export function IntakeForm(): React.ReactElement {
     totalBudget: 3500000,
     currency: 'INR',
     styleCulture: 'Royal Rajasthani Heritage with Sangeet, Mehendi, & Pheras',
-    nonNegotiables: 'Authentic regional catering (strict Jain counter), live Shehnai, venue with open lawn',
+    nonNegotiables:
+      'Authentic regional catering (strict Jain counter), live Shehnai, venue with open lawn',
     venueAreaSqFt: 20000,
   });
 
@@ -100,8 +101,8 @@ export function IntakeForm(): React.ReactElement {
         formData.eventType === 'Community Event'
           ? 'community-carnival'
           : formData.eventType === 'Birthday'
-          ? 'milestone-birthday'
-          : 'royal-wedding';
+            ? 'milestone-birthday'
+            : 'royal-wedding';
 
       loadSavedExample(fallbackKey);
       announce('Loaded curated master plan. Navigating to workspace.');
@@ -178,7 +179,8 @@ export function IntakeForm(): React.ReactElement {
           Plan Your Next Celebration, Perfectly.
         </h1>
         <p className="text-sm sm:text-base text-ink-muted max-w-2xl mx-auto leading-relaxed">
-          Deterministic ledger math, day-of minute-by-minute run-of-shows, civic permits, and real-time streaming GenAI intelligence.
+          Deterministic ledger math, day-of minute-by-minute run-of-shows, civic permits, and
+          real-time streaming GenAI intelligence.
         </p>
       </div>
 
@@ -205,9 +207,7 @@ export function IntakeForm(): React.ReactElement {
                 <span className="text-[10px] font-mono font-bold uppercase text-accent block mb-1">
                   {preset.eventType}
                 </span>
-                <h3 className="font-serif font-bold text-sm text-ink mb-1">
-                  {preset.title}
-                </h3>
+                <h3 className="font-serif font-bold text-sm text-ink mb-1">{preset.title}</h3>
                 <p className="text-xs text-ink-muted leading-relaxed line-clamp-2">
                   {preset.description}
                 </p>
@@ -223,11 +223,10 @@ export function IntakeForm(): React.ReactElement {
         className="rounded-3xl border border-rule bg-paper-card p-6 sm:p-10 shadow-card space-y-6"
       >
         <div className="border-b border-rule pb-4">
-          <h2 className="font-serif font-black text-xl text-ink">
-            Celebration Specifications
-          </h2>
+          <h2 className="font-serif font-black text-xl text-ink">Celebration Specifications</h2>
           <p className="text-xs text-ink-muted mt-0.5">
-            Provide host preferences. Input is treated strictly as passive data with zero-trust validation.
+            Provide host preferences. Input is treated strictly as passive data with zero-trust
+            validation.
           </p>
         </div>
 
@@ -241,9 +240,7 @@ export function IntakeForm(): React.ReactElement {
             <select
               id="intake-event-type"
               value={formData.eventType}
-              onChange={(e) =>
-                setFormData({ ...formData, eventType: e.target.value as EventType })
-              }
+              onChange={(e) => setFormData({ ...formData, eventType: e.target.value as EventType })}
               className="w-full min-h-[44px] rounded-xl border border-rule bg-paper px-3.5 py-2 text-xs sm:text-sm font-semibold text-ink focus:border-accent"
             >
               {EVENT_TYPES.map((type) => (
@@ -415,9 +412,7 @@ export function IntakeForm(): React.ReactElement {
         </div>
 
         {/* Disclaimer Note */}
-        <p className="text-[11px] text-ink-faint leading-relaxed">
-          {PLANNER_DISCLAIMER}
-        </p>
+        <p className="text-[11px] text-ink-faint leading-relaxed">{PLANNER_DISCLAIMER}</p>
 
         {/* Submit Button */}
         <div className="pt-2 flex justify-end">
@@ -453,7 +448,8 @@ export function IntakeForm(): React.ReactElement {
                   Clarification Required
                 </h3>
                 <p className="text-xs text-ink-muted mt-0.5">
-                  {followUpQuestion.reason || 'We noticed a key ambiguity in your event specifications.'}
+                  {followUpQuestion.reason ||
+                    'We noticed a key ambiguity in your event specifications.'}
                 </p>
               </div>
             </div>

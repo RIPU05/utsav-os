@@ -3,7 +3,8 @@ import { sanitizeInput, sanitizeObject } from '@/lib/sanitizer';
 
 describe('Sanitizer - DOMPurify Hardening', () => {
   it('strips dangerous HTML tags, script blocks, and event handlers', () => {
-    const maliciousInput = '<script>alert("pwned")</script>Traditional Wedding<img src=x onerror=alert(1)>';
+    const maliciousInput =
+      '<script>alert("pwned")</script>Traditional Wedding<img src=x onerror=alert(1)>';
     const clean = sanitizeInput(maliciousInput);
 
     expect(clean).not.toContain('<script>');

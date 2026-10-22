@@ -129,11 +129,17 @@ export function BudgetStackedBar({
           </div>
         ))}
         <div className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-zinc-400 dark:bg-zinc-600" aria-hidden="true" />
+          <span
+            className="h-2.5 w-2.5 rounded-full bg-zinc-400 dark:bg-zinc-600"
+            aria-hidden="true"
+          />
           <span>Contingency ({contingencyPercent}%)</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-zinc-500 dark:bg-zinc-700" aria-hidden="true" />
+          <span
+            className="h-2.5 w-2.5 rounded-full bg-zinc-500 dark:bg-zinc-700"
+            aria-hidden="true"
+          />
           <span>Taxes &amp; Fees ({taxServiceChargePercent}%)</span>
         </div>
       </div>

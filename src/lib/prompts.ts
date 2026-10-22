@@ -180,10 +180,13 @@ export function buildCreativeAssistantPrompt(
   const sanitizedNotes = sanitizeInput(userNotes);
 
   const topics = {
-    invitation: 'Draft 3 exquisite, culturally resonant invitation texts (formal, warm, and contemporary) including RSVP wording and dress code suggestions.',
+    invitation:
+      'Draft 3 exquisite, culturally resonant invitation texts (formal, warm, and contemporary) including RSVP wording and dress code suggestions.',
     menu: 'Design an exquisite 4-course banquet menu with beverage pairings, accommodating cultural traditions and dietary preferences.',
-    theme: 'Develop 3 deeply personalized aesthetic and decor mood-boards with color hex palettes, floral styling, and lighting directives.',
-    runOfShow: 'Create a minute-by-minute master ceremony run-of-show schedule with cue notes, stage directions, and transition buffers.',
+    theme:
+      'Develop 3 deeply personalized aesthetic and decor mood-boards with color hex palettes, floral styling, and lighting directives.',
+    runOfShow:
+      'Create a minute-by-minute master ceremony run-of-show schedule with cue notes, stage directions, and transition buffers.',
   };
 
   return `

@@ -4,13 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './theme-toggle';
-import {
-  CalendarDays,
-  Sparkles,
-  BookmarkCheck,
-  ShieldCheck,
-  ScrollText,
-} from 'lucide-react';
+import { CalendarDays, Sparkles, BookmarkCheck, ShieldCheck, ScrollText } from 'lucide-react';
 
 const NAV_ITEMS = [
   { href: '/workspace', label: 'Workspace', icon: CalendarDays },
@@ -69,7 +63,10 @@ export function Navigation(): React.ReactElement {
                   }`}
                   aria-current={isActive ? 'page' : undefined}
                 >
-                  <Icon className={`h-4 w-4 shrink-0 ${isActive ? 'text-accent' : 'text-ink-faint'}`} aria-hidden="true" />
+                  <Icon
+                    className={`h-4 w-4 shrink-0 ${isActive ? 'text-accent' : 'text-ink-faint'}`}
+                    aria-hidden="true"
+                  />
                   <span>{item.label}</span>
                 </Link>
               );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
 import { PlanProvider, usePlan } from '@/components/plan-context';
 import { SAVED_EXAMPLES } from '@/data/saved-examples';
@@ -19,6 +19,11 @@ function TestConsumer() {
     announce,
     liveAnnouncement,
     dateReflowNotice,
+    loadSavedExample,
+    activeTab,
+    setActiveTab,
+    isReplanOpen,
+    setIsReplanOpen,
   } = usePlan();
 
   return (
@@ -27,6 +32,8 @@ function TestConsumer() {
       <div data-testid="date">{activePlan?.date}</div>
       <div data-testid="announcement">{liveAnnouncement}</div>
       <div data-testid="notice">{dateReflowNotice}</div>
+      <div data-testid="activeTab">{activeTab}</div>
+      <div data-testid="isReplanOpen">{isReplanOpen ? 'open' : 'closed'}</div>
 
       <button
         onClick={() => {
@@ -94,6 +101,9 @@ function TestConsumer() {
         UpdateSpent
       </button>
 
+      <button onClick={() => loadSavedExample('milestone-birthday')}>LoadBirthdayPreset</button>
+      <button onClick={() => setActiveTab('budget')}>SetTabBudget</button>
+      <button onClick={() => setIsReplanOpen(true)}>OpenReplan</button>
       <button onClick={undoLastChange}>Undo</button>
       <button onClick={clearPlan}>Clear</button>
       <button onClick={() => announce('Manual notification')}>Announce</button>
@@ -101,8 +111,13 @@ function TestConsumer() {
   );
 }
 
+function OutsideHookConsumer() {
+  usePlan();
+  return <div>Outside</div>;
+}
+
 describe('PlanContext State Reducers & Actions', () => {
-  it('exercises all mutation reducers and state updaters', () => {
+  it('exercises all mutation reducers, presets, and state updaters', () => {
     render(
       <PlanProvider>
         <TestConsumer />
@@ -142,6 +157,21 @@ describe('PlanContext State Reducers & Actions', () => {
     });
 
     act(() => {
+      screen.getByText('LoadBirthdayPreset').click();
+    });
+    expect(screen.getByTestId('title').textContent).toContain('Speakeasy');
+
+    act(() => {
+      screen.getByText('SetTabBudget').click();
+    });
+    expect(screen.getByTestId('activeTab').textContent).toBe('budget');
+
+    act(() => {
+      screen.getByText('OpenReplan').click();
+    });
+    expect(screen.getByTestId('isReplanOpen').textContent).toBe('open');
+
+    act(() => {
       screen.getByText('Undo').click();
     });
 
@@ -154,5 +184,11 @@ describe('PlanContext State Reducers & Actions', () => {
       screen.getByText('Clear').click();
     });
     expect(screen.getByTestId('title').textContent).toBe('');
+  });
+
+  it('throws an error when usePlan is called outside of PlanProvider', () => {
+    expect(() => render(<OutsideHookConsumer />)).toThrow(
+      'usePlan must be used within a PlanProvider'
+    );
   });
 });

@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Lint, Test & Build Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: 1. Install dependencies
+        run: npm ci
+
+      - name: 2. Prettier format check
+        run: npm run format:check
+
+      - name: 3. Typecheck
+        run: npm run typecheck
+
+      - name: 4. Lint check
+        run: npm run lint
+
+      - name: 5. Test suite with coverage
+        run: npm run test:coverage
+        env:
+          CI: true
+          GEMINI_API_KEY: mock-ci-key
+
+      - name: 6. Next.js Production Build
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+          GEMINI_API_KEY: mock-ci-key

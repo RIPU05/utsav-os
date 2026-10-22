@@ -22,19 +22,13 @@ export function DayOfSlotRow({ slot }: DayOfSlotRowProps): React.ReactElement {
     <div className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-paper-subtle/30 px-2 rounded-xl transition-colors">
       <div className="flex items-start gap-4">
         <div className="shrink-0 text-center bg-paper-subtle p-2 rounded-xl min-w-[70px]">
-          <span className="text-sm font-mono font-black text-ink block">
-            {slot.time}
-          </span>
-          <span className="text-[10px] font-mono text-ink-muted">
-            {slot.durationMinutes} min
-          </span>
+          <span className="text-sm font-mono font-black text-ink block">{slot.time}</span>
+          <span className="text-[10px] font-mono text-ink-muted">{slot.durationMinutes} min</span>
         </div>
 
         <div>
           <div className="flex items-center gap-2">
-            <h4 className="text-sm font-bold text-ink">
-              {slot.activityTitle}
-            </h4>
+            <h4 className="text-sm font-bold text-ink">{slot.activityTitle}</h4>
             {slot.isCritical && (
               <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-state-error/15 text-state-error">
                 CRITICAL CUE
@@ -47,9 +41,7 @@ export function DayOfSlotRow({ slot }: DayOfSlotRowProps): React.ReactElement {
             {slot.vendorRole && ` (${slot.vendorRole})`}
           </p>
           {slot.notes && (
-            <p className="text-[11px] text-ink-faint italic mt-1">
-              Note: {slot.notes}
-            </p>
+            <p className="text-[11px] text-ink-faint italic mt-1">Note: {slot.notes}</p>
           )}
         </div>
       </div>

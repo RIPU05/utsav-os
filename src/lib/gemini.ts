@@ -58,7 +58,7 @@ export class GeminiApiError extends Error {
  */
 export function extractJsonFromResponse(rawText: string): string {
   const trimmed = rawText.trim();
-  const fenceRegex = /^```(?:json)?\s*([\s\S]*?)\s*```$/i;
+  const fenceRegex = /```(?:json)?\s*([\s\S]*?)\s*```/i;
   const match = trimmed.match(fenceRegex);
   if (match && match[1]) {
     return match[1].trim();

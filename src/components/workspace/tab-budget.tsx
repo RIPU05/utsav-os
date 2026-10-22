@@ -11,16 +11,9 @@ import {
   BudgetStatCard,
   BudgetStackedBar,
   BudgetCategoryRow,
+  BudgetLedgerSummaryRows,
 } from '@/components/ui-sub';
-import {
-  AlertTriangle,
-  SlidersHorizontal,
-  Info,
-  ShieldCheck,
-  Receipt,
-  Sparkles,
-  TrendingUp,
-} from 'lucide-react';
+import { AlertTriangle, SlidersHorizontal, Info, Sparkles, TrendingUp } from 'lucide-react';
 
 /**
  * Primary Budget Engine tab view providing ledger tracking, category cap monitoring,
@@ -55,11 +48,12 @@ export function TabBudget(): React.ReactElement | null {
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-6 w-6 shrink-0 mt-0.5" aria-hidden="true" />
               <div>
-                <h2 className="font-serif font-black text-lg">
-                  Budget Overrun Alert
-                </h2>
+                <h2 className="font-serif font-black text-lg">Budget Overrun Alert</h2>
                 <p className="mt-1 text-xs sm:text-sm text-state-error/90 leading-relaxed">
-                  Total committed allocations ({formatCurrency(summary.totalCommitted, activePlan.currency)}) exceed your declared budget envelope ({formatCurrency(summary.totalBudget, activePlan.currency)}) by{' '}
+                  Total committed allocations (
+                  {formatCurrency(summary.totalCommitted, activePlan.currency)}) exceed your
+                  declared budget envelope (
+                  {formatCurrency(summary.totalBudget, activePlan.currency)}) by{' '}
                   <strong>{formatCurrency(summary.overBudgetAmount, activePlan.currency)}</strong>.
                 </p>
               </div>
@@ -157,9 +151,7 @@ export function TabBudget(): React.ReactElement | null {
       <div className="rounded-2xl border border-rule bg-paper-card shadow-xs overflow-hidden">
         <div className="p-5 border-b border-rule flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h2 className="font-serif font-bold text-lg text-ink">
-              Detailed Ledger Breakdown
-            </h2>
+            <h2 className="font-serif font-bold text-lg text-ink">Detailed Ledger Breakdown</h2>
             <p className="text-xs text-ink-muted mt-0.5">
               Category caps, deterministic target allocations, and recorded actual spend.
             </p>
@@ -178,13 +170,27 @@ export function TabBudget(): React.ReactElement | null {
           <table className="w-full text-left text-xs sm:text-sm">
             <thead className="bg-paper-subtle/70 text-ink-muted uppercase font-mono text-[11px] border-b border-rule">
               <tr>
-                <th scope="col" className="p-4">Category</th>
-                <th scope="col" className="p-4 text-right">Min Est.</th>
-                <th scope="col" className="p-4 text-right">Target Est.</th>
-                <th scope="col" className="p-4 text-right">Hard Cap</th>
-                <th scope="col" className="p-4 text-right">Actual Spent</th>
-                <th scope="col" className="p-4 text-right">% of Budget</th>
-                <th scope="col" className="p-4">Notes &amp; Scope</th>
+                <th scope="col" className="p-4">
+                  Category
+                </th>
+                <th scope="col" className="p-4 text-right">
+                  Min Est.
+                </th>
+                <th scope="col" className="p-4 text-right">
+                  Target Est.
+                </th>
+                <th scope="col" className="p-4 text-right">
+                  Hard Cap
+                </th>
+                <th scope="col" className="p-4 text-right">
+                  Actual Spent
+                </th>
+                <th scope="col" className="p-4 text-right">
+                  % of Budget
+                </th>
+                <th scope="col" className="p-4">
+                  Notes &amp; Scope
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-rule text-ink">
@@ -205,73 +211,20 @@ export function TabBudget(): React.ReactElement | null {
                 />
               ))}
 
-              {/* Contingency Line */}
-              <tr className="bg-paper-subtle/30 font-medium">
-                <td className="p-4 flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-zinc-500" aria-hidden="true" />
-                  <span>Contingency Reserve ({summary.contingencyPercent}%)</span>
-                </td>
-                <td className="p-4 text-right text-ink-muted">—</td>
-                <td className="p-4 text-right font-mono font-bold">
-                  {formatCurrency(summary.contingencyAmount, activePlan.currency)}
-                </td>
-                <td className="p-4 text-right text-ink-muted">—</td>
-                <td className="p-4 text-right text-ink-muted">—</td>
-                <td className="p-4 text-right font-mono text-ink-muted">
-                  {summary.contingencyPercent}%
-                </td>
-                <td className="p-4 text-xs text-ink-muted">
-                  Reserve fund for unforeseen weather, logistics, or vendor overtime.
-                </td>
-              </tr>
-
-              {/* Statutory Tax Line */}
-              <tr className="bg-paper-subtle/30 font-medium">
-                <td className="p-4 flex items-center gap-2">
-                  <Receipt className="h-4 w-4 text-zinc-500" aria-hidden="true" />
-                  <span>Statutory Taxes &amp; Fees ({summary.taxServiceChargePercent}%)</span>
-                </td>
-                <td className="p-4 text-right text-ink-muted">—</td>
-                <td className="p-4 text-right font-mono font-bold">
-                  {formatCurrency(summary.taxServiceChargeAmount, activePlan.currency)}
-                </td>
-                <td className="p-4 text-right text-ink-muted">—</td>
-                <td className="p-4 text-right text-ink-muted">—</td>
-                <td className="p-4 text-right font-mono text-ink-muted">
-                  {summary.taxServiceChargePercent}%
-                </td>
-                <td className="p-4 text-xs text-ink-muted">
-                  Statutory GST, venue hospitality charges, and local licensing permits.
-                </td>
-              </tr>
-
-              {/* Grand Total Row */}
-              <tr className="bg-paper-subtle font-black border-t-2 border-rule">
-                <td className="p-4 text-sm font-serif">Total Committed Budget</td>
-                <td className="p-4 text-right font-mono text-ink-muted">
-                  {formatCurrency(summary.subtotalMin, activePlan.currency)}
-                </td>
-                <td className="p-4 text-right font-mono text-base text-accent">
-                  {formatCurrency(summary.totalCommitted, activePlan.currency)}
-                </td>
-                <td className="p-4 text-right text-ink-muted">—</td>
-                <td className="p-4 text-right font-mono text-accent">
-                  {formatCurrency(summary.totalActualSpent, activePlan.currency)}
-                </td>
-                <td className="p-4 text-right font-mono">
-                  {Math.round((summary.totalCommitted / summary.totalBudget) * 100)}%
-                </td>
-                <td className="p-4 text-xs font-normal text-ink-muted">
-                  Remaining Envelope:{' '}
-                  <strong
-                    className={
-                      summary.isOverBudget ? 'text-state-error' : 'text-state-success'
-                    }
-                  >
-                    {formatCurrency(summary.remainingBudget, activePlan.currency)}
-                  </strong>
-                </td>
-              </tr>
+              {/* Summary and Total Rows via Atomic Subcomponent */}
+              <BudgetLedgerSummaryRows
+                contingencyPercent={summary.contingencyPercent}
+                contingencyAmount={summary.contingencyAmount}
+                taxServiceChargePercent={summary.taxServiceChargePercent}
+                taxServiceChargeAmount={summary.taxServiceChargeAmount}
+                subtotalMin={summary.subtotalMin}
+                totalCommitted={summary.totalCommitted}
+                totalActualSpent={summary.totalActualSpent}
+                totalBudget={summary.totalBudget}
+                remainingBudget={summary.remainingBudget}
+                isOverBudget={summary.isOverBudget}
+                currency={activePlan.currency}
+              />
             </tbody>
           </table>
         </div>

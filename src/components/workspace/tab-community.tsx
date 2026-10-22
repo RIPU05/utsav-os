@@ -10,14 +10,7 @@ import {
 } from '@/lib/community-engine';
 import { PermitStatus } from '@/lib/constants';
 import { PermitRow, VolunteerShiftCard, CapacityMeter } from '@/components/ui-sub';
-import {
-  ShieldCheck,
-  Users,
-  Building2,
-  AlertTriangle,
-  Scale,
-  Sparkles,
-} from 'lucide-react';
+import { ShieldCheck, Users, Building2, AlertTriangle, Scale, Sparkles } from 'lucide-react';
 
 /**
  * Community coordination tab component managing municipal permits,
@@ -26,13 +19,7 @@ import {
  * @returns {React.ReactElement | null} The rendered tab screen.
  */
 export function TabCommunity(): React.ReactElement | null {
-  const {
-    activePlan,
-    updatePermitStatus,
-    assignVolunteer,
-    setActivePlan,
-    announce,
-  } = usePlan();
+  const { activePlan, updatePermitStatus, assignVolunteer, setActivePlan, announce } = usePlan();
 
   const [newVolunteerName, setNewVolunteerName] = useState<{ [shiftId: string]: string }>({});
 
@@ -112,7 +99,8 @@ export function TabCommunity(): React.ReactElement | null {
                 Community Event Coordination &amp; Regulatory Compliance
               </h2>
               <p className="mt-1 text-xs sm:text-sm text-ink-muted leading-relaxed">
-                Dedicated civic and crowd workflow: municipal ground permits, acoustic sound licenses, volunteer staffing rosters, and life safety crowd density tracking.
+                Dedicated civic and crowd workflow: municipal ground permits, acoustic sound
+                licenses, volunteer staffing rosters, and life safety crowd density tracking.
               </p>
             </div>
           </div>
@@ -186,8 +174,8 @@ export function TabCommunity(): React.ReactElement | null {
               capacityMetrics.safetyStatus === 'Safe'
                 ? 'text-state-success'
                 : capacityMetrics.safetyStatus === 'Nearing Capacity'
-                ? 'text-state-warning'
-                : 'text-state-error'
+                  ? 'text-state-warning'
+                  : 'text-state-error'
             }`}
           >
             {capacityMetrics.safetyStatus}
@@ -230,11 +218,21 @@ export function TabCommunity(): React.ReactElement | null {
           <table className="w-full text-left text-xs sm:text-sm">
             <thead className="bg-paper-subtle/70 text-ink-muted uppercase font-mono text-[11px] border-b border-rule">
               <tr>
-                <th scope="col" className="p-4">Permit Title &amp; Authority</th>
-                <th scope="col" className="p-4">Due (Days Before)</th>
-                <th scope="col" className="p-4">Reference No.</th>
-                <th scope="col" className="p-4">Status</th>
-                <th scope="col" className="p-4">Scope &amp; Compliance Notes</th>
+                <th scope="col" className="p-4">
+                  Permit Title &amp; Authority
+                </th>
+                <th scope="col" className="p-4">
+                  Due (Days Before)
+                </th>
+                <th scope="col" className="p-4">
+                  Reference No.
+                </th>
+                <th scope="col" className="p-4">
+                  Status
+                </th>
+                <th scope="col" className="p-4">
+                  Scope &amp; Compliance Notes
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-rule text-ink">

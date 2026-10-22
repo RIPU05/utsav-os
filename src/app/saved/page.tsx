@@ -50,7 +50,8 @@ export default function SavedPage(): React.ReactElement {
             Curated Celebration Blueprints
           </h1>
           <p className="mt-1 text-sm text-ink-muted max-w-2xl leading-relaxed">
-            Production-grade reference plans for Weddings, Birthdays, and Community Events featuring pre-calculated ledger distributions, day-of run-of-shows, and regulatory permits.
+            Production-grade reference plans for Weddings, Birthdays, and Community Events featuring
+            pre-calculated ledger distributions, day-of run-of-shows, and regulatory permits.
           </p>
         </div>
 

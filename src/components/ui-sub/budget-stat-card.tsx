@@ -30,14 +30,8 @@ export function BudgetStatCard({
 }: BudgetStatCardProps): React.ReactElement {
   return (
     <div className="rounded-2xl border border-rule bg-paper-card p-5 shadow-xs transition-shadow hover:shadow-md">
-      <span className="text-[11px] font-mono uppercase text-ink-muted block mb-1">
-        {label}
-      </span>
-      <div
-        className={`font-serif text-2xl font-bold ${
-          isAccent ? 'text-accent' : 'text-ink'
-        }`}
-      >
+      <span className="text-[11px] font-mono uppercase text-ink-muted block mb-1">{label}</span>
+      <div className={`font-serif text-2xl font-bold ${isAccent ? 'text-accent' : 'text-ink'}`}>
         {formattedValue}
       </div>
       <span className="text-[11px] text-ink-faint mt-1 block">{subtext}</span>

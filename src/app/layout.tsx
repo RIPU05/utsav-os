@@ -53,9 +53,7 @@ export default function RootLayout({
         </a>
 
         <ThemeProvider>
-          <PlanProvider>
-            {children}
-          </PlanProvider>
+          <PlanProvider>{children}</PlanProvider>
         </ThemeProvider>
       </body>
     </html>

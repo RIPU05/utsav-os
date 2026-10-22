@@ -12,7 +12,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
     totalBudget: 3500000,
     currency: 'INR',
     styleCulture: 'Royal Rajasthani Heritage with Sangeet, Mehendi, & Traditional Pheras',
-    nonNegotiables: 'Authentic regional catering (strict Jain & Swaminarayan counters), live Shehnai troupe, open lawn with heritage palace backdrop',
+    nonNegotiables:
+      'Authentic regional catering (strict Jain & Swaminarayan counters), live Shehnai troupe, open lawn with heritage palace backdrop',
     venueAreaSqFt: 22000,
     budget: {
       categories: [
@@ -44,7 +45,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
           maxEstimate: 600000,
           capLimit: 550000,
           actualSpent: 500000,
-          notes: 'Marigold floral mandap, vintage lanterns, fairy light canopy, and royal entryway.',
+          notes:
+            'Marigold floral mandap, vintage lanterns, fairy light canopy, and royal entryway.',
         },
         {
           id: 'cat-w-4',
@@ -74,7 +76,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
           maxEstimate: 130000,
           capLimit: 120000,
           actualSpent: 100000,
-          notes: 'Custom block-printed invitation scrolls, brass favors, and guest welcome hampers.',
+          notes:
+            'Custom block-printed invitation scrolls, brass favors, and guest welcome hampers.',
         },
       ],
       contingencyPercent: 10,
@@ -94,7 +97,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-w-1',
         phase: 'Now',
         title: 'Finalize Heritage Venue Contract & Deposit',
-        description: 'Review contract indemnity terms, noise curfew guidelines, and secure dates with initial deposit.',
+        description:
+          'Review contract indemnity terms, noise curfew guidelines, and secure dates with initial deposit.',
         dueDate: '2026-09-01',
         owner: 'Host Family',
         estimatedCostLink: '₹10,50,000 (Venue)',
@@ -105,7 +109,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-w-2',
         phase: 'Next 30 days',
         title: 'Catering Menu Tasting & Special Diet Finalization',
-        description: 'Taste signature regional dishes, finalize Jain counter menu, and agree on live station setup.',
+        description:
+          'Taste signature regional dishes, finalize Jain counter menu, and agree on live station setup.',
         dueDate: '2026-10-15',
         owner: 'Couple & Caterer',
         estimatedCostLink: '₹8,50,000 (Catering)',
@@ -116,7 +121,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-w-3',
         phase: 'Event week',
         title: 'Mandap Floral Rigging & Sound Check',
-        description: 'Oversee arrival of fresh marigolds, sound acoustic leveling, and stage load-in.',
+        description:
+          'Oversee arrival of fresh marigolds, sound acoustic leveling, and stage load-in.',
         dueDate: '2026-11-18',
         owner: 'Lead Decorator',
         estimatedCostLink: '₹5,20,000 (Decor)',
@@ -127,7 +133,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-w-4',
         phase: 'Event day',
         title: 'Baraat Arrival, Shehnai Welcome & Ceremony',
-        description: 'Coordinate procession arrival, traditional aarti welcome, and garland exchange at main gate.',
+        description:
+          'Coordinate procession arrival, traditional aarti welcome, and garland exchange at main gate.',
         dueDate: '2026-11-20',
         owner: 'Wedding Coordinator',
         completed: false,
@@ -184,7 +191,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
       {
         id: 'v-w-1',
         categoryName: 'Venue & Heritage Lawns',
-        vendorTypeDescription: 'Licensed heritage property with manicured courtyards and dedicated bridal suites.',
+        vendorTypeDescription:
+          'Licensed heritage property with manicured courtyards and dedicated bridal suites.',
         status: 'Signed',
         quoteAmount: 1050000,
         contractedAmount: 1050000,
@@ -200,7 +208,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
       {
         id: 'v-w-2',
         categoryName: 'Royal Feast Catering Services',
-        vendorTypeDescription: 'Full-service luxury event caterer with dedicated Jain and Swaminarayan kitchen teams.',
+        vendorTypeDescription:
+          'Full-service luxury event caterer with dedicated Jain and Swaminarayan kitchen teams.',
         status: 'Quoted',
         quoteAmount: 850000,
         contractedAmount: 850000,
@@ -215,7 +224,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
       {
         id: 'v-w-3',
         categoryName: 'Floral & Thematic Production',
-        vendorTypeDescription: 'Specialty wedding scenographer focusing on regional marigolds and sustainable floral artistry.',
+        vendorTypeDescription:
+          'Specialty wedding scenographer focusing on regional marigolds and sustainable floral artistry.',
         status: 'Lead',
         quoteAmount: 520000,
         questionsToAsk: [
@@ -229,7 +239,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
       {
         id: 'v-w-4',
         categoryName: 'Cinematic Photography & Drone',
-        vendorTypeDescription: 'Experienced visual storytelling studio specializing in royal architecture weddings.',
+        vendorTypeDescription:
+          'Experienced visual storytelling studio specializing in royal architecture weddings.',
         status: 'Lead',
         quoteAmount: 260000,
         questionsToAsk: [
@@ -295,7 +306,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
     totalBudget: 450000,
     currency: 'INR',
     styleCulture: 'Vintage Jazz Speakeasy with Acoustic Trio and Memory Retrospective',
-    nonNegotiables: 'Custom retrospective video presentation, curated mocktail bar, artisanal dessert buffet',
+    nonNegotiables:
+      'Custom retrospective video presentation, curated mocktail bar, artisanal dessert buffet',
     venueAreaSqFt: 4000,
     budget: {
       categories: [
@@ -317,7 +329,7 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
           maxEstimate: 150000,
           capLimit: 140000,
           actualSpent: 130000,
-          notes: 'Hors d\'oeuvres, tapas station, gourmet flatbreads, and dessert display.',
+          notes: "Hors d'oeuvres, tapas station, gourmet flatbreads, and dessert display.",
         },
         {
           id: 'cat-b-3',
@@ -355,7 +367,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-b-1',
         phase: 'Now',
         title: 'Book Rooftop Lounge & Secure Audio Specs',
-        description: 'Verify projector capability and audio decibel permissions for live acoustic trio.',
+        description:
+          'Verify projector capability and audio decibel permissions for live acoustic trio.',
         dueDate: '2026-10-25',
         owner: 'Party Host',
         completed: true,
@@ -365,7 +378,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-b-2',
         phase: 'Next 7 days',
         title: 'Compile Video Retrospective & Memory Wall Photos',
-        description: 'Gather childhood and milestone photographs from family members for slideshow montage.',
+        description:
+          'Gather childhood and milestone photographs from family members for slideshow montage.',
         dueDate: '2026-11-10',
         owner: 'Family Organizing Team',
         completed: false,
@@ -375,7 +389,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-b-3',
         phase: 'Event week',
         title: 'Confirm Cake Delivery & Specialty Mocktail Menu',
-        description: 'Coordinate pastry chef delivery and specialty garnish supplies for beverage bar.',
+        description:
+          'Coordinate pastry chef delivery and specialty garnish supplies for beverage bar.',
         dueDate: '2026-11-26',
         owner: 'Lead Coordinator',
         completed: false,
@@ -385,7 +400,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-b-4',
         phase: 'Event day',
         title: 'Guest Arrival, Speakeasy Cocktails & Surprise Toast',
-        description: 'Host arrivals, live jazz welcome set, surprise retrospective screening, and cake cutting.',
+        description:
+          'Host arrivals, live jazz welcome set, surprise retrospective screening, and cake cutting.',
         dueDate: '2026-11-28',
         owner: 'Host & Emcee',
         completed: false,
@@ -440,7 +456,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
       {
         id: 'v-b-1',
         categoryName: 'Venue & Rooftop Hospitality',
-        vendorTypeDescription: 'Boutique hospitality rooftop lounge with private bar and skyline vista.',
+        vendorTypeDescription:
+          'Boutique hospitality rooftop lounge with private bar and skyline vista.',
         status: 'Signed',
         quoteAmount: 160000,
         contractedAmount: 160000,
@@ -454,7 +471,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
       {
         id: 'v-b-2',
         categoryName: 'Artisan Cocktail & Tapas Catering',
-        vendorTypeDescription: 'Gourmet finger food and mocktail bar service with professional mixologists.',
+        vendorTypeDescription:
+          'Gourmet finger food and mocktail bar service with professional mixologists.',
         status: 'Quoted',
         quoteAmount: 130000,
         questionsToAsk: [
@@ -467,7 +485,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
       {
         id: 'v-b-3',
         categoryName: 'Live Jazz Trio',
-        vendorTypeDescription: 'Professional jazz ensemble performing retro swing and bossa nova standards.',
+        vendorTypeDescription:
+          'Professional jazz ensemble performing retro swing and bossa nova standards.',
         status: 'Lead',
         quoteAmount: 50000,
         questionsToAsk: [
@@ -530,7 +549,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
     totalBudget: 800000,
     currency: 'INR',
     styleCulture: 'Zero-Waste Community Fair with Folk Performances, Solar Stage & Artisan Bazaar',
-    nonNegotiables: '100% compostable cutlery, sound barrier shutdown at 10 PM sharp, volunteer first-aid post, BBMP waste permit',
+    nonNegotiables:
+      '100% compostable cutlery, sound barrier shutdown at 10 PM sharp, volunteer first-aid post, BBMP waste permit',
     venueAreaSqFt: 30000,
     budget: {
       categories: [
@@ -562,7 +582,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
           maxEstimate: 130000,
           capLimit: 120000,
           actualSpent: 105000,
-          notes: '5 organic waste sorting stations, volunteer waste marshals, and clean water tanker.',
+          notes:
+            '5 organic waste sorting stations, volunteer waste marshals, and clean water tanker.',
         },
         {
           id: 'cat-c-4',
@@ -572,7 +593,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
           maxEstimate: 80000,
           capLimit: 70000,
           actualSpent: 60000,
-          notes: 'Certified paramedic station, fire extinguisher rentals, and municipal permit filings.',
+          notes:
+            'Certified paramedic station, fire extinguisher rentals, and municipal permit filings.',
         },
         {
           id: 'cat-c-5',
@@ -602,7 +624,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-c-1',
         phase: 'Now',
         title: 'Submit BBMP Civic Grounds & Public Park Application',
-        description: 'File ground authorization with local municipal ward office accompanied by perimeter layout map.',
+        description:
+          'File ground authorization with local municipal ward office accompanied by perimeter layout map.',
         dueDate: '2026-11-05',
         owner: 'Civic Liaison Lead',
         estimatedCostLink: '₹1,90,000 (Grounds)',
@@ -613,7 +636,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-c-2',
         phase: 'Next 7 days',
         title: 'File Police Sound Decibel & Traffic NOC',
-        description: 'Submit acoustic amplification specifications and traffic parking management plan to local police station.',
+        description:
+          'Submit acoustic amplification specifications and traffic parking management plan to local police station.',
         dueDate: '2026-11-18',
         owner: 'Legal & Safety Officer',
         estimatedCostLink: '₹65,000 (Safety)',
@@ -624,7 +648,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-c-3',
         phase: 'Event week',
         title: 'Conduct Volunteer Orientation & Safety Walkthrough',
-        description: 'Train 24 volunteer marshals on emergency exits, lost-child protocol, and waste segregation rules.',
+        description:
+          'Train 24 volunteer marshals on emergency exits, lost-child protocol, and waste segregation rules.',
         dueDate: '2026-12-03',
         owner: 'Volunteer Coordinator',
         completed: false,
@@ -634,7 +659,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         id: 'task-c-4',
         phase: 'Event day',
         title: 'Festival Gate Opening, Solar Stage Acts & Waste Audit',
-        description: 'Execute public entry opening, live cultural performances, artisan market, and green waste audit.',
+        description:
+          'Execute public entry opening, live cultural performances, artisan market, and green waste audit.',
         dueDate: '2026-12-05',
         owner: 'Event Director',
         completed: false,
@@ -699,7 +725,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
       {
         id: 'v-c-1',
         categoryName: 'Civic Infrastructure & Barricades',
-        vendorTypeDescription: 'Licensed events contractor supplying modular tents, crowd stanchions, and portable toilets.',
+        vendorTypeDescription:
+          'Licensed events contractor supplying modular tents, crowd stanchions, and portable toilets.',
         status: 'Signed',
         quoteAmount: 185000,
         contractedAmount: 185000,
@@ -713,7 +740,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
       {
         id: 'v-c-2',
         categoryName: 'Solar Stage & Audio Engineering',
-        vendorTypeDescription: 'Green events technology firm providing zero-emission battery solar audio systems.',
+        vendorTypeDescription:
+          'Green events technology firm providing zero-emission battery solar audio systems.',
         status: 'Quoted',
         quoteAmount: 145000,
         questionsToAsk: [
@@ -726,7 +754,8 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
       {
         id: 'v-c-3',
         categoryName: 'Emergency Medical & Paramedic Team',
-        vendorTypeDescription: 'Certified emergency medical responders with mobile ambulance on site.',
+        vendorTypeDescription:
+          'Certified emergency medical responders with mobile ambulance on site.',
         status: 'Signed',
         quoteAmount: 60000,
         contractedAmount: 60000,
@@ -755,7 +784,14 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         role: 'Crowd Safety & Flow',
         shiftTitle: 'Midday Flow & Exit Marshaling',
         requiredCount: 8,
-        assignedVolunteers: ['Rohan Patel', 'Divya Nair', 'Aman Verma', 'Sneha Roy', 'Vikram Das', 'Meera Joshi'],
+        assignedVolunteers: [
+          'Rohan Patel',
+          'Divya Nair',
+          'Aman Verma',
+          'Sneha Roy',
+          'Vikram Das',
+          'Meera Joshi',
+        ],
         startTime: '13:30',
         endTime: '18:30',
         notes: 'Maintain 10-foot wide emergency lane clearance at all times.',
@@ -775,7 +811,14 @@ export const SAVED_EXAMPLES: Record<string, EventPlan> = {
         role: 'Hospitality & F&B Assist',
         shiftTitle: 'Waste Segregation & Water Station Monitors',
         requiredCount: 6,
-        assignedVolunteers: ['Akash M.', 'Tanvi G.', 'Nikhil S.', 'Bhavna T.', 'Farhan A.', 'Lata P.'],
+        assignedVolunteers: [
+          'Akash M.',
+          'Tanvi G.',
+          'Nikhil S.',
+          'Bhavna T.',
+          'Farhan A.',
+          'Lata P.',
+        ],
         startTime: '11:00',
         endTime: '19:00',
         notes: 'Assist attendees in sorting wet food scrap from dry recyclables.',

@@ -2,18 +2,8 @@
 
 import React, { useState, useRef } from 'react';
 import { usePlan } from '../plan-context';
-import {
-  Sparkles,
-  Send,
-  Copy,
-  Check,
-  Mail,
-  UtensilsCrossed,
-  Palette,
-  Clock,
-  Loader2,
-  StopCircle,
-} from 'lucide-react';
+import { Sparkles, Send, Mail, UtensilsCrossed, Palette, Clock, StopCircle } from 'lucide-react';
+import { CreativeOutputBox, CreativeBaselineCard } from '../ui-sub';
 
 type AssistantMode = 'invitation' | 'menu' | 'theme' | 'runOfShow';
 
@@ -102,7 +92,10 @@ export function TabCreative(): React.ReactElement | null {
     } catch (err: unknown) {
       if ((err as Error).name !== 'AbortError') {
         const msg = (err as Error).message || 'Generation failed';
-        setStreamedText((prev) => `${prev}\n\n[Generation Notice: ${msg}. You can explore the preset ideas below.]`);
+        setStreamedText(
+          (prev) =>
+            `${prev}\n\n[Generation Notice: ${msg}. You can explore the preset ideas below.]`
+        );
         announce(`Generation error: ${msg}`);
       }
     } finally {
@@ -128,7 +121,11 @@ export function TabCreative(): React.ReactElement | null {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const MODES: { id: AssistantMode; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  const MODES: {
+    id: AssistantMode;
+    label: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }[] = [
     { id: 'invitation', label: 'Invitations & RSVP', icon: Mail },
     { id: 'menu', label: 'Menu & Food Pairing', icon: UtensilsCrossed },
     { id: 'theme', label: 'Thematic Color Palettes', icon: Palette },
@@ -143,11 +140,10 @@ export function TabCreative(): React.ReactElement | null {
           <Sparkles className="h-4 w-4" aria-hidden="true" />
           <span>Real-Time GenAI Creative Assistant</span>
         </div>
-        <h2 className="font-serif font-black text-2xl text-ink">
-          Streaming Creative Synthesis
-        </h2>
+        <h2 className="font-serif font-black text-2xl text-ink">Streaming Creative Synthesis</h2>
         <p className="mt-1 text-xs sm:text-sm text-ink-muted leading-relaxed">
-          Synthesize personalized invitations, dietary-paired banquet menus, color palettes, and ceremony cues in real time via server-side streaming route handlers.
+          Synthesize personalized invitations, dietary-paired banquet menus, color palettes, and
+          ceremony cues in real time via server-side streaming route handlers.
         </p>
 
         {/* Mode Selector Buttons */}
@@ -205,78 +201,18 @@ export function TabCreative(): React.ReactElement | null {
       </div>
 
       {/* Streaming Output Display with WCAG aria-live compliance */}
-      <div className="rounded-2xl border border-rule bg-paper-card p-6 shadow-xs">
-        <div className="flex items-center justify-between pb-3 border-b border-rule mb-4">
-          <div className="flex items-center gap-2">
-            <span className="font-serif font-bold text-base text-ink">
-              AI Generation Output
-            </span>
-            {isStreaming && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-accent animate-pulse">
-                <Loader2 className="h-3 w-3 animate-spin" aria-hidden="true" />
-                Streaming response...
-              </span>
-            )}
-          </div>
-
-          {streamedText && (
-            <button
-              type="button"
-              onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-rule text-xs font-semibold text-ink hover:bg-paper-subtle transition-colors min-h-[36px]"
-            >
-              {copied ? (
-                <>
-                  <Check className="h-3.5 w-3.5 text-state-success" aria-hidden="true" />
-                  <span>Copied</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="h-3.5 w-3.5 text-ink-muted" aria-hidden="true" />
-                  <span>Copy</span>
-                </>
-              )}
-            </button>
-          )}
-        </div>
-
-        {/* Aria-live region for accessibility */}
-        <div
-          role="region"
-          aria-live="polite"
-          aria-label="Creative assistant output"
-          className="min-h-[160px] max-h-[500px] overflow-y-auto whitespace-pre-wrap text-xs sm:text-sm font-sans text-ink leading-relaxed"
-        >
-          {streamedText ? (
-            streamedText
-          ) : (
-            <div className="text-ink-faint italic py-8 text-center">
-              Press &ldquo;Generate&rdquo; to stream bespoke creative concepts directly from the Google Gemini model.
-            </div>
-          )}
-        </div>
-      </div>
+      <CreativeOutputBox
+        streamedText={streamedText}
+        isStreaming={isStreaming}
+        copied={copied}
+        onCopy={handleCopy}
+      />
 
       {/* Current Preset Ideas Reference */}
-      <div className="rounded-2xl border border-rule bg-paper-card p-6 shadow-xs">
-        <h3 className="font-serif font-black text-lg text-ink mb-3">
-          Plan Creative Baseline Reference
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-ink-muted leading-relaxed">
-          <div className="p-4 rounded-xl border border-rule bg-paper-subtle/30">
-            <span className="font-bold text-ink block mb-1">Invitation Sample:</span>
-            <p className="italic">{activePlan.ideas.invitationSample || 'No invitation text saved yet.'}</p>
-          </div>
-          <div className="p-4 rounded-xl border border-rule bg-paper-subtle/30">
-            <span className="font-bold text-ink block mb-1">Curated Menu Pairings:</span>
-            <ul className="list-disc list-inside space-y-1">
-              {(activePlan.ideas.menuPairings || []).map((m, i) => (
-                <li key={i}>{m}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
+      <CreativeBaselineCard
+        invitationSample={activePlan.ideas.invitationSample}
+        menuPairings={activePlan.ideas.menuPairings}
+      />
     </div>
   );
 }

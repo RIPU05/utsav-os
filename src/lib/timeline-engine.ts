@@ -65,7 +65,9 @@ export function reflowTimelineDates(
 ): { updatedTasks: TimelineTask[]; notice: string } {
   const newDateObj = new Date(newEventDate);
   const oldDateObj = new Date(oldEventDate);
-  const diffDays = Math.round((newDateObj.getTime() - oldDateObj.getTime()) / (1000 * 60 * 60 * 24));
+  const diffDays = Math.round(
+    (newDateObj.getTime() - oldDateObj.getTime()) / (1000 * 60 * 60 * 24)
+  );
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -84,7 +86,8 @@ export function reflowTimelineDates(
     };
   });
 
-  const direction = diffDays > 0 ? `delayed by ${diffDays} days` : `brought forward by ${Math.abs(diffDays)} days`;
+  const direction =
+    diffDays > 0 ? `delayed by ${diffDays} days` : `brought forward by ${Math.abs(diffDays)} days`;
   const notice = `Event date updated from ${oldEventDate} to ${newEventDate} (${direction}). Reflowed ${updatedTasks.length} task milestones locally.`;
 
   return { updatedTasks, notice };
@@ -190,7 +193,11 @@ export function detectDayOfScheduleConflicts(slots: DayOfScheduleSlot[]): DayOfC
             type: 'TIME_OVERLAP',
             message: `Location contention in "${a.location}": "${a.activityTitle}" (${a.time}) overlaps with "${b.activityTitle}" (${b.time}).`,
           });
-        } else if (a.leadPerson && b.leadPerson && a.leadPerson.toLowerCase() === b.leadPerson.toLowerCase()) {
+        } else if (
+          a.leadPerson &&
+          b.leadPerson &&
+          a.leadPerson.toLowerCase() === b.leadPerson.toLowerCase()
+        ) {
           conflicts.push({
             slotAId: a.id,
             slotBId: b.id,
@@ -256,8 +263,18 @@ export function generateTimelineIcs(planTitle: string, tasks: TimelineTask[]): s
  * @returns {string} Comma-separated values formatted text.
  * @throws {never}
  */
-export function exportTimelineToCsv(tasks: TimelineTask[], dayOfSlots: DayOfScheduleSlot[] = []): string {
-  const headers = ['Type', 'Phase/Time', 'Title', 'Description/Location', 'Due Date/Lead', 'Status/Critical'];
+export function exportTimelineToCsv(
+  tasks: TimelineTask[],
+  dayOfSlots: DayOfScheduleSlot[] = []
+): string {
+  const headers = [
+    'Type',
+    'Phase/Time',
+    'Title',
+    'Description/Location',
+    'Due Date/Lead',
+    'Status/Critical',
+  ];
   const rows: string[][] = [headers];
 
   for (const t of tasks) {
@@ -293,6 +310,9 @@ export function exportTimelineToCsv(tasks: TimelineTask[], dayOfSlots: DayOfSche
  * @returns {string} Pretty-printed JSON string.
  * @throws {never}
  */
-export function exportTimelineToJson(tasks: TimelineTask[], dayOfSlots: DayOfScheduleSlot[] = []): string {
+export function exportTimelineToJson(
+  tasks: TimelineTask[],
+  dayOfSlots: DayOfScheduleSlot[] = []
+): string {
   return JSON.stringify({ milestoneTasks: tasks, dayOfRunOfShow: dayOfSlots }, null, 2);
 }

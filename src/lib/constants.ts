@@ -60,7 +60,13 @@ export const RISK_SEVERITIES = ['Low', 'Medium', 'High', 'Critical'] as const;
 export type RiskSeverity = (typeof RISK_SEVERITIES)[number];
 
 // Community Permit Statuses
-export const PERMIT_STATUSES = ['Not Started', 'Application Filed', 'In Review', 'Approved', 'Exempt'] as const;
+export const PERMIT_STATUSES = [
+  'Not Started',
+  'Application Filed',
+  'In Review',
+  'Approved',
+  'Exempt',
+] as const;
 export type PermitStatus = (typeof PERMIT_STATUSES)[number];
 
 // Volunteer Shift Statuses
@@ -96,8 +102,10 @@ export const EVENT_PRESETS: EventPreset[] = [
     suggestedGuests: 400,
     suggestedBudget: 3500000,
     styleCulture: 'Royal Rajasthani Heritage with Sangeet, Mehendi, & Pheras',
-    nonNegotiables: 'Authentic Marwari feast, live acoustic folk troupe, eco-friendly floral decor, 100% vegetarian counter',
-    description: 'Multi-day celebratory wedding blending royal architecture, regional traditions, and coordinated hospitality.',
+    nonNegotiables:
+      'Authentic Marwari feast, live acoustic folk troupe, eco-friendly floral decor, 100% vegetarian counter',
+    description:
+      'Multi-day celebratory wedding blending royal architecture, regional traditions, and coordinated hospitality.',
     venueAreaSqFt: 18000,
   },
   {
@@ -108,8 +116,10 @@ export const EVENT_PRESETS: EventPreset[] = [
     suggestedGuests: 120,
     suggestedBudget: 450000,
     styleCulture: 'Elegant Retro Jazz & Speakeasy Gala',
-    nonNegotiables: 'Custom retrospective video montage, curated mocktail/cocktail pairings, gluten-free dessert bar',
-    description: 'Sophisticated evening birthday gathering with live jazz, memory wall, and personalized guest keepsakes.',
+    nonNegotiables:
+      'Custom retrospective video montage, curated mocktail/cocktail pairings, gluten-free dessert bar',
+    description:
+      'Sophisticated evening birthday gathering with live jazz, memory wall, and personalized guest keepsakes.',
     venueAreaSqFt: 3500,
   },
   {
@@ -120,8 +130,10 @@ export const EVENT_PRESETS: EventPreset[] = [
     suggestedGuests: 1200,
     suggestedBudget: 800000,
     styleCulture: 'Zero-Waste Sustainable Folk Fair with Artisan Stalls and Solar Stage',
-    nonNegotiables: 'BBMP municipal waste permit, certified sound barrier at 10 PM, volunteer first-aid post, 100% compostable cutlery',
-    description: 'Public civic celebration featuring local artisans, community performances, waste segregation stations, and family workshops.',
+    nonNegotiables:
+      'BBMP municipal waste permit, certified sound barrier at 10 PM, volunteer first-aid post, 100% compostable cutlery',
+    description:
+      'Public civic celebration featuring local artisans, community performances, waste segregation stations, and family workshops.',
     venueAreaSqFt: 30000,
   },
 ];

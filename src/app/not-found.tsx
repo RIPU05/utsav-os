@@ -15,9 +15,7 @@ export default function NotFound(): React.ReactElement {
         <div className="p-3 rounded-2xl bg-accent-subtle text-accent mb-4">
           <HelpCircle className="h-8 w-8" aria-hidden="true" />
         </div>
-        <h1 className="font-serif font-black text-3xl text-ink">
-          Page Not Found (404)
-        </h1>
+        <h1 className="font-serif font-black text-3xl text-ink">Page Not Found (404)</h1>
         <p className="mt-2 text-xs sm:text-sm text-ink-muted leading-relaxed">
           The celebration planning screen you are seeking does not exist or has been relocated.
         </p>

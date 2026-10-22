@@ -49,14 +49,17 @@ class TokenBucketRateLimiter {
 
     // Prune stale IP records every 5 minutes to avoid memory leaks
     if (typeof setInterval !== 'undefined') {
-      const interval = setInterval(() => {
-        const now = Date.now();
-        this.buckets.forEach((record, ip) => {
-          if (now - record.lastRefill > this.windowMs * 2) {
-            this.buckets.delete(ip);
-          }
-        });
-      }, 5 * 60 * 1000);
+      const interval = setInterval(
+        () => {
+          const now = Date.now();
+          this.buckets.forEach((record, ip) => {
+            if (now - record.lastRefill > this.windowMs * 2) {
+              this.buckets.delete(ip);
+            }
+          });
+        },
+        5 * 60 * 1000
+      );
       if (typeof interval === 'object' && 'unref' in interval) {
         interval.unref();
       }

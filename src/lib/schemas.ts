@@ -21,30 +21,18 @@ import {
 } from './constants';
 
 export type { VendorStatus, TimelinePhase, RiskSeverity, PermitStatus, VolunteerRole };
-export {
-  EVENT_TYPES,
-  TIMELINE_PHASES,
-  VENDOR_STATUS_PIPELINE,
-  PERMIT_STATUSES,
-  VOLUNTEER_ROLES,
-};
+export { EVENT_TYPES, TIMELINE_PHASES, VENDOR_STATUS_PIPELINE, PERMIT_STATUSES, VOLUNTEER_ROLES };
 
-export const currencyCodeSchema = z.enum([
-  'INR',
-  'USD',
-  'EUR',
-  'GBP',
-  'AED',
-  'CAD',
-  'AUD',
-]);
+export const currencyCodeSchema = z.enum(['INR', 'USD', 'EUR', 'GBP', 'AED', 'CAD', 'AUD']);
 
 /**
  * Intake form validation schema
  */
 export const intakeFormSchema = z.object({
   eventType: z.enum(EVENT_TYPES, {
-    errorMap: () => ({ message: 'Please select an event type (Wedding, Birthday, or Community Event)' }),
+    errorMap: () => ({
+      message: 'Please select an event type (Wedding, Birthday, or Community Event)',
+    }),
   }),
   city: z
     .string()
@@ -75,11 +63,7 @@ export const intakeFormSchema = z.object({
     .trim()
     .max(500, 'Non-negotiables cannot exceed 500 characters')
     .default(''),
-  venueAreaSqFt: z.coerce
-    .number()
-    .nonnegative()
-    .optional()
-    .default(0),
+  venueAreaSqFt: z.coerce.number().nonnegative().optional().default(0),
 });
 
 export type IntakeFormData = z.infer<typeof intakeFormSchema>;
@@ -275,7 +259,10 @@ export const replanRequestSchema = z.object({
   changes: z.object({
     totalBudget: z.number().positive().optional(),
     guestCount: z.number().int().positive().optional(),
-    eventDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+    eventDate: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/)
+      .optional(),
     modifiedCategory: z
       .object({
         categoryId: z.string(),

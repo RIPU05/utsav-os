@@ -39,7 +39,9 @@ describe('Workspace Tab Components Flow', () => {
     renderWithProviders(<TabBudget />);
 
     expect(screen.getByText(/Detailed Ledger Breakdown/i)).toBeInTheDocument();
-    expect(screen.getByRole('progressbar', { name: /Category allocation distribution bar/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('progressbar', { name: /Category allocation distribution bar/i })
+    ).toBeInTheDocument();
     expect(screen.getByText(/Total Committed Budget/i)).toBeInTheDocument();
   });
 
@@ -57,7 +59,9 @@ describe('Workspace Tab Components Flow', () => {
   it('renders TabVendors with 4-stage procurement pipeline filters', () => {
     renderWithProviders(<TabVendors />);
 
-    expect(screen.getByText(/Vendor Screening & Contract Procurement Protocol/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Vendor Screening & Contract Procurement Protocol/i)
+    ).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /Lead/i })[0]).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /Quoted/i })[0]).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: /Signed/i })[0]).toBeInTheDocument();
@@ -67,7 +71,23 @@ describe('Workspace Tab Components Flow', () => {
   it('renders TabCommunity with permits, volunteer rosters, and crowd safety', () => {
     renderWithProviders(<TabCommunity />);
 
-    expect(screen.getByText(/Community Event Coordination & Regulatory Compliance/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Community Event Coordination & Regulatory Compliance/i)
+    ).toBeInTheDocument();
     expect(screen.getByText(/Life Safety Code Venue Assessment/i)).toBeInTheDocument();
+  });
+
+  it('renders SavedPage and handles selecting and downloading preset plans', async () => {
+    const SavedPage = (await import('@/app/saved/page')).default;
+    renderWithProviders(<SavedPage />);
+
+    expect(screen.getByText(/Curated Celebration Blueprints/i)).toBeInTheDocument();
+    const downloadBtns = screen.getAllByLabelText(/Download JSON blueprint/i);
+    expect(downloadBtns.length).toBeGreaterThan(0);
+    fireEvent.click(downloadBtns[0]);
+
+    const cards = screen.getAllByText(/Open in Workspace/i);
+    expect(cards.length).toBeGreaterThan(0);
+    fireEvent.click(cards[0]);
   });
 });

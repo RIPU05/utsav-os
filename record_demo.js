@@ -19,7 +19,10 @@ async function smoothScrollTo(page, targetY, steps = 25, delayPerStep = 40) {
   const currentY = await page.evaluate(() => window.scrollY);
   const diff = targetY - currentY;
   for (let i = 0; i < steps; i++) {
-    await page.evaluate((stepDiff) => window.scrollBy({ top: stepDiff, behavior: 'smooth' }), diff / steps);
+    await page.evaluate(
+      (stepDiff) => window.scrollBy({ top: stepDiff, behavior: 'smooth' }),
+      diff / steps
+    );
     await sleep(delayPerStep);
   }
 }
@@ -151,7 +154,9 @@ async function run() {
   if (presetNavLink) {
     const navBox = await presetNavLink.boundingBox();
     if (navBox) {
-      await page.mouse.move(navBox.x + navBox.width / 2, navBox.y + navBox.height / 2, { steps: 12 });
+      await page.mouse.move(navBox.x + navBox.width / 2, navBox.y + navBox.height / 2, {
+        steps: 12,
+      });
       await sleep(300);
       await presetNavLink.click();
       await page.waitForURL('**/saved');
@@ -187,7 +192,9 @@ async function run() {
   if (budgetTabBtn) {
     const tabBox = await budgetTabBtn.boundingBox();
     if (tabBox) {
-      await page.mouse.move(tabBox.x + tabBox.width / 2, tabBox.y + tabBox.height / 2, { steps: 12 });
+      await page.mouse.move(tabBox.x + tabBox.width / 2, tabBox.y + tabBox.height / 2, {
+        steps: 12,
+      });
       await sleep(300);
       await budgetTabBtn.click();
       await sleep(1500);
@@ -223,7 +230,9 @@ async function run() {
   if (budgetInput) {
     const bInBox = await budgetInput.boundingBox();
     if (bInBox) {
-      await page.mouse.move(bInBox.x + bInBox.width / 2, bInBox.y + bInBox.height / 2, { steps: 10 });
+      await page.mouse.move(bInBox.x + bInBox.width / 2, bInBox.y + bInBox.height / 2, {
+        steps: 10,
+      });
       await sleep(800);
     }
   }
@@ -250,7 +259,9 @@ async function run() {
   if (communityTabBtn) {
     const cTabBox = await communityTabBtn.boundingBox();
     if (cTabBox) {
-      await page.mouse.move(cTabBox.x + cTabBox.width / 2, cTabBox.y + cTabBox.height / 2, { steps: 12 });
+      await page.mouse.move(cTabBox.x + cTabBox.width / 2, cTabBox.y + cTabBox.height / 2, {
+        steps: 12,
+      });
       await sleep(300);
       await communityTabBtn.click();
       await sleep(2000);
@@ -281,7 +292,9 @@ async function run() {
   if (timelineTabBtn) {
     const tTabBox = await timelineTabBtn.boundingBox();
     if (tTabBox) {
-      await page.mouse.move(tTabBox.x + tTabBox.width / 2, tTabBox.y + tTabBox.height / 2, { steps: 12 });
+      await page.mouse.move(tTabBox.x + tTabBox.width / 2, tTabBox.y + tTabBox.height / 2, {
+        steps: 12,
+      });
       await sleep(300);
       await timelineTabBtn.click();
       await sleep(1800);
@@ -325,7 +338,9 @@ async function run() {
   if (vendorsTabBtn) {
     const vTabBox = await vendorsTabBtn.boundingBox();
     if (vTabBox) {
-      await page.mouse.move(vTabBox.x + vTabBox.width / 2, vTabBox.y + vTabBox.height / 2, { steps: 12 });
+      await page.mouse.move(vTabBox.x + vTabBox.width / 2, vTabBox.y + vTabBox.height / 2, {
+        steps: 12,
+      });
       await sleep(300);
       await vendorsTabBtn.click();
       await sleep(2000);
@@ -341,7 +356,9 @@ async function run() {
   if (creativeTabBtn) {
     const crTabBox = await creativeTabBtn.boundingBox();
     if (crTabBox) {
-      await page.mouse.move(crTabBox.x + crTabBox.width / 2, crTabBox.y + crTabBox.height / 2, { steps: 12 });
+      await page.mouse.move(crTabBox.x + crTabBox.width / 2, crTabBox.y + crTabBox.height / 2, {
+        steps: 12,
+      });
       await sleep(300);
       await creativeTabBtn.click();
       await sleep(2500);
@@ -432,9 +449,12 @@ async function run() {
 
   console.log(`Converting ${latestWebm} to 1080p MP4: ${outputMp4}...`);
   // ffmpeg transcode to 1080p MP4 (h264, yuv420p)
-  execSync(`ffmpeg -y -i "${latestWebm}" -c:v libx264 -preset fast -crf 20 -pix_fmt yuv420p -r 30 "${outputMp4}"`, {
-    stdio: 'inherit',
-  });
+  execSync(
+    `ffmpeg -y -i "${latestWebm}" -c:v libx264 -preset fast -crf 20 -pix_fmt yuv420p -r 30 "${outputMp4}"`,
+    {
+      stdio: 'inherit',
+    }
+  );
 
   const stats = fs.statSync(outputMp4);
   const sizeMb = (stats.size / (1024 * 1024)).toFixed(2);

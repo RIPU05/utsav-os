@@ -168,7 +168,8 @@ export function ReplanModal(): React.ReactElement | null {
       budget: {
         ...activePlan.budget,
         categories: mergedCategories,
-        contingencyPercent: proposedDiff.newContingencyPercent ?? activePlan.budget.contingencyPercent,
+        contingencyPercent:
+          proposedDiff.newContingencyPercent ?? activePlan.budget.contingencyPercent,
       },
       updatedAt: new Date().toISOString(),
       version: activePlan.version + 1,
@@ -280,9 +281,7 @@ export function ReplanModal(): React.ReactElement | null {
               <h3 className="font-serif font-black text-base text-ink mb-1">
                 {proposedDiff.summaryOfChanges}
               </h3>
-              <p className="text-xs text-ink-muted leading-relaxed">
-                {proposedDiff.why}
-              </p>
+              <p className="text-xs text-ink-muted leading-relaxed">{proposedDiff.why}</p>
             </div>
 
             {/* Trade-off Options */}
@@ -328,8 +327,8 @@ export function ReplanModal(): React.ReactElement | null {
                             diffVal > 0
                               ? 'text-state-warning'
                               : diffVal < 0
-                              ? 'text-state-success'
-                              : 'text-ink-muted'
+                                ? 'text-state-success'
+                                : 'text-ink-muted'
                           }`}
                         >
                           {diffVal > 0 ? `+${diffVal.toLocaleString()}` : diffVal.toLocaleString()}

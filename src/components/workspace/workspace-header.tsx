@@ -3,7 +3,11 @@
 import React from 'react';
 import { usePlan, WorkspaceTab } from '../plan-context';
 import { formatCurrency } from '@/lib/budget-engine';
-import { exportTimelineToCsv, exportTimelineToJson, generateTimelineIcs } from '@/lib/timeline-engine';
+import {
+  exportTimelineToCsv,
+  exportTimelineToJson,
+  generateTimelineIcs,
+} from '@/lib/timeline-engine';
 import {
   Calendar,
   Users,
@@ -113,9 +117,7 @@ export function WorkspaceHeader(): React.ReactElement | null {
             <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold tracking-wide uppercase bg-accent-subtle text-accent border border-accent/20">
               {activePlan.eventType}
             </span>
-            <span className="text-xs font-mono text-ink-faint">
-              v{activePlan.version}
-            </span>
+            <span className="text-xs font-mono text-ink-faint">v{activePlan.version}</span>
             {activePlan.isSavedExample && (
               <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-paper-subtle text-ink-muted">
                 Preset Model

@@ -31,12 +31,8 @@ export function PermitRow({ permit, onStatusChange }: PermitRowProps): React.Rea
         <span className="font-bold text-ink block">{permit.permitType}</span>
         <span className="text-xs text-ink-muted">{permit.authorityName}</span>
       </td>
-      <td className="p-4 font-mono text-ink-muted">
-        {permit.requiredByDaysBefore} days before
-      </td>
-      <td className="p-4 font-mono text-ink-faint">
-        {permit.referenceNumber || 'Pending'}
-      </td>
+      <td className="p-4 font-mono text-ink-muted">{permit.requiredByDaysBefore} days before</td>
+      <td className="p-4 font-mono text-ink-faint">{permit.referenceNumber || 'Pending'}</td>
       <td className="p-4">
         <select
           value={permit.status}
@@ -51,9 +47,7 @@ export function PermitRow({ permit, onStatusChange }: PermitRowProps): React.Rea
           ))}
         </select>
       </td>
-      <td className="p-4 text-xs text-ink-muted max-w-xs leading-relaxed">
-        {permit.notes || '—'}
-      </td>
+      <td className="p-4 text-xs text-ink-muted max-w-xs leading-relaxed">{permit.notes || '—'}</td>
     </tr>
   );
 }

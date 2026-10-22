@@ -87,12 +87,8 @@ export function BudgetCategoryRow({
           className="w-24 text-right p-1 rounded border border-rule bg-paper text-ink font-mono focus:border-accent"
         />
       </td>
-      <td className="p-4 text-right font-mono text-ink-muted">
-        {percentOfBudget}%
-      </td>
-      <td className="p-4 text-xs text-ink-muted max-w-xs leading-relaxed">
-        {notes || '—'}
-      </td>
+      <td className="p-4 text-right font-mono text-ink-muted">{percentOfBudget}%</td>
+      <td className="p-4 text-xs text-ink-muted max-w-xs leading-relaxed">{notes || '—'}</td>
     </tr>
   );
 }

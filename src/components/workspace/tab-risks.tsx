@@ -43,7 +43,8 @@ export function TabRisks(): React.ReactElement | null {
           severity: activePlan.eventType === 'Community Event' ? 'Critical' : 'Medium',
           potentialIssue: 'Sound decibel enforcement resulting in premature music shutdown.',
           rootCause: 'Police sound limit threshold at 10:00 PM.',
-          mitigationTask: 'Obtain written municipal sound clearance and adhere to acoustic limiters.',
+          mitigationTask:
+            'Obtain written municipal sound clearance and adhere to acoustic limiters.',
         },
         {
           id: 'risk-4',
@@ -94,7 +95,8 @@ export function TabRisks(): React.ReactElement | null {
             Proactive Risk Register &amp; Mitigation Engine
           </h2>
           <p className="text-xs text-ink-muted mt-0.5">
-            Audit across 6 vulnerability vectors: Dependencies, Weather, Permits, Dietary, Payments, and Single Points of Failure.
+            Audit across 6 vulnerability vectors: Dependencies, Weather, Permits, Dietary, Payments,
+            and Single Points of Failure.
           </p>
         </div>
         <button
@@ -116,24 +118,20 @@ export function TabRisks(): React.ReactElement | null {
           >
             <div>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <span className="text-xs font-mono font-bold text-ink">
-                  {risk.category}
-                </span>
+                <span className="text-xs font-mono font-bold text-ink">{risk.category}</span>
                 <span
                   className={`px-2 py-0.5 rounded text-[10px] font-mono font-black uppercase ${
                     risk.severity === 'Critical'
                       ? 'bg-state-error/20 text-state-error'
                       : risk.severity === 'High'
-                      ? 'bg-state-warning/20 text-state-warning'
-                      : 'bg-paper-subtle text-ink-muted'
+                        ? 'bg-state-warning/20 text-state-warning'
+                        : 'bg-paper-subtle text-ink-muted'
                   }`}
                 >
                   {risk.severity} Severity
                 </span>
               </div>
-              <h3 className="font-serif font-bold text-sm text-ink mb-1">
-                {risk.potentialIssue}
-              </h3>
+              <h3 className="font-serif font-bold text-sm text-ink mb-1">{risk.potentialIssue}</h3>
               <p className="text-xs text-ink-muted mb-3 leading-relaxed">
                 <strong>Root Cause:</strong> {risk.rootCause}
               </p>
@@ -143,9 +141,7 @@ export function TabRisks(): React.ReactElement | null {
               <span className="text-[10px] font-mono uppercase font-bold text-accent block mb-0.5">
                 Mitigation Protocol
               </span>
-              <p className="text-xs text-ink leading-relaxed font-medium">
-                {risk.mitigationTask}
-              </p>
+              <p className="text-xs text-ink leading-relaxed font-medium">{risk.mitigationTask}</p>
             </div>
           </div>
         ))}
