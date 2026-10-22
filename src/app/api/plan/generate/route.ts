@@ -43,6 +43,9 @@ const rawGeminiPlanSchema = z.object({
   ideas: personalizedIdeasSchema,
 });
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(request: Request) {
   const safety = checkRequestSafety(request);
   if (!safety.allowed) {

@@ -5,6 +5,9 @@ import { callGeminiStructured } from '@/lib/gemini';
 import { checkRequestSafety, handleApiError } from '@/lib/api-helper';
 import { sanitizeObject } from '@/lib/sanitizer';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(request: Request) {
   const safety = checkRequestSafety(request);
   if (!safety.allowed) {

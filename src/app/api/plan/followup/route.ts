@@ -6,6 +6,9 @@ import { checkRequestSafety, handleApiError } from '@/lib/api-helper';
 import { followupCache, createPayloadKey } from '@/lib/cache';
 import { sanitizeObject } from '@/lib/sanitizer';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(request: Request) {
   const safety = checkRequestSafety(request);
   if (!safety.allowed) {
