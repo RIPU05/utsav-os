@@ -179,7 +179,7 @@ export function generateTimelineIcs(planTitle: string, tasks: TimelineTask[]): s
 
   const events = tasks.map((task, idx) => {
     const dateFormatted = task.dueDate.replace(/-/g, '');
-    const uid = `task-${idx}-${dateFormatted}@aayojanace.pro`;
+    const uid = `task-${idx}-${dateFormatted}@utsav.os`;
     const summary = task.title.replace(/[\\;,]/g, ' ');
     const desc = (task.description || '').replace(/[\\;,]/g, ' ');
 
@@ -199,7 +199,7 @@ export function generateTimelineIcs(planTitle: string, tasks: TimelineTask[]): s
   return [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Aayojan Ace Pro//EN',
+    'PRODID:-//Utsav OS//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     `X-WR-CALNAME:${cleanTitle} Milestones`,

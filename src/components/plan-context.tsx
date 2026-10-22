@@ -39,8 +39,8 @@ interface PlanContextType {
 
 const PlanContext = createContext<PlanContextType | undefined>(undefined);
 
-const LOCAL_STORAGE_KEY = 'aayojan_ace_pro_active_plan';
-const HISTORY_STORAGE_KEY = 'aayojan_ace_pro_plan_history';
+const LOCAL_STORAGE_KEY = 'utsav_os_active_plan';
+const HISTORY_STORAGE_KEY = 'utsav_os_plan_history';
 
 export function PlanProvider({ children }: { children: React.ReactNode }) {
   const [activePlan, setActivePlanState] = useState<EventPlan | null>(null);

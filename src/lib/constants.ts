@@ -2,10 +2,10 @@
  * Aayojan Ace Pro - Master Domain Constants
  */
 
-export const APP_NAME = 'Aayojan Ace Pro';
+export const APP_NAME = 'Utsav OS';
 export const APP_TAGLINE = 'The Autonomous Celebration & Event Planning Engine';
 export const APP_ONE_LINER =
-  'Aayojan Ace Pro delivers deterministic budget intelligence, day-of minute-by-minute run-of-shows, vendor contract analysis, community permits & volunteer coordination, and real-time streaming GenAI ideation.';
+  'Utsav OS delivers deterministic budget intelligence, day-of minute-by-minute run-of-shows, vendor contract analysis, community permits & volunteer coordination, and real-time streaming GenAI ideation.';
 
 export const DEFAULT_CURRENCY = 'INR';
 
@@ -126,4 +126,4 @@ export const EVENT_PRESETS: EventPreset[] = [
 ];
 
 export const PLANNER_DISCLAIMER =
-  'Notice: All figures and recommendations are planning estimates computed for organizational purposes. Aayojan Ace Pro does not execute automated contractual commitments or disburse financial funds. Always review physical contracts with licensed vendors and regulatory authorities.';
+  'Notice: All figures and recommendations are planning estimates computed for organizational purposes. Utsav OS does not execute automated contractual commitments or disburse financial funds. Always review physical contracts with licensed vendors and regulatory authorities.';

@@ -1,8 +1,8 @@
 {
-  "name": "aayojan-ace-pro",
+  "name": "utsav-os",
   "version": "2.0.0",
   "private": true,
-  "description": "Aayojan Ace Pro - Advanced Autonomous Celebration & Event Planning Engine with Deterministic Logic, Real-Time Streaming GenAI, Community Coordination, WCAG 2.1 AA Compliance, and Zero-Trust Hardening.",
+  "description": "Utsav OS - Advanced Autonomous Celebration & Event Planning Engine with Deterministic Logic, Real-Time Streaming GenAI, Community Coordination, WCAG 2.1 AA Compliance, and Zero-Trust Hardening.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

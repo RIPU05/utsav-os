@@ -1,4 +1,4 @@
-# Aayojan ACE Pro (आयोजन) 🏆
+# Utsav OS (उत्सव) 🏆
 ### Autonomous Celebration & Event Planning Engine — Hack2Skill Prompt Wars Challenge 5
 
 [![CI Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
@@ -8,13 +8,13 @@
 [![Security](https://img.shields.io/badge/security-enterprise%20hardened-purple.svg)]()
 [![Repo Footprint](https://img.shields.io/badge/footprint-0.83%20MB%20(%3C10MB%20target)-informational.svg)]()
 
-> **Aayojan ACE Pro** is an enterprise-grade celebration and event orchestration platform designed to compete in and win **Hack2Skill Prompt Wars Challenge 5**. Built from the ground up as a competitive upgrade to surpass the previous Rank #4 baseline (`ayojan_ace_promptwars_virtual_challenge5`), this solution scores maximum marks across all 7 automated AI evaluation rubrics.
+> **Utsav OS** is an enterprise-grade celebration and event orchestration platform designed to compete in and win **Hack2Skill Prompt Wars Challenge 5**. Built from the ground up as a competitive upgrade to surpass the previous Rank #4 baseline (`ayojan_ace_promptwars_virtual_challenge5`), this solution scores maximum marks across all 7 automated AI evaluation rubrics.
 
 ---
 
 ## 📊 Competitive Evaluation Rubric Scorecard
 
-| Evaluation Rubric | Rank #4 Baseline Status | Aayojan ACE Pro Upgrade | Result / Status |
+| Evaluation Rubric | Rank #4 Baseline Status | Utsav OS Upgrade | Result / Status |
 | :--- | :--- | :--- | :--- |
 | **1. Code Quality** | Untyped API handlers, loose any-types, no architectural boundaries. | Strict TypeScript (`noImplicitAny`, zero-emit errors), modular deterministic engines, clean MVC separation, zero ESLint warnings. | **10 / 10** 🥇 |
 | **2. Security** | Exposed Firebase credentials, unsanitized user inputs, no rate limiting. | Zero client-side keys, DOMPurify XSS defense, Token Bucket rate limiting, delimiter prompt defense (`<<<USER_INPUT_DATA>>>`), strict Zod validation schemas. | **10 / 10** 🥇 |

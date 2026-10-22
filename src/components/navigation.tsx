@@ -32,17 +32,17 @@ export function Navigation() {
           <Link
             href="/"
             className="flex items-center gap-3 px-2 py-3 rounded-xl hover:bg-paper-subtle transition-colors mb-6 group"
-            aria-label="Aayojan Ace Pro Home"
+            aria-label="Utsav OS Home"
           >
             <div className="h-9 w-9 rounded-xl bg-accent text-accent-text flex items-center justify-center font-serif font-black text-lg shadow-sm group-hover:scale-105 transition-transform">
-              आ
+              उ
             </div>
             <div>
               <span className="font-serif font-bold text-base tracking-tight text-ink block leading-none">
-                Aayojan Ace
+                Utsav OS
               </span>
               <span className="text-[10px] font-mono tracking-wider uppercase text-accent font-semibold">
-                Pro Edition
+                Event Engine
               </span>
             </div>
           </Link>

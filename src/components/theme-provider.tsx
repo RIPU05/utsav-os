@@ -17,7 +17,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    const saved = localStorage.getItem('aayojan_ace_theme') as Theme | null;
+    const saved = localStorage.getItem('utsav_os_theme') as Theme | null;
     if (saved && ['light', 'dark', 'system'].includes(saved)) {
       setTheme(saved);
     }
@@ -50,7 +50,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const handleSetTheme = (newTheme: Theme) => {
     setTheme(newTheme);
-    localStorage.setItem('aayojan_ace_theme', newTheme);
+    localStorage.setItem('utsav_os_theme', newTheme);
   };
 
   return (

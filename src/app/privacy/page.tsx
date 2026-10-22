@@ -54,7 +54,7 @@ export default function PrivacyPage() {
         <article className="prose dark:prose-invert max-w-none text-xs sm:text-sm text-ink-muted leading-relaxed space-y-4 rounded-3xl border border-rule bg-paper-card p-6 sm:p-8">
           <h2 className="font-serif font-bold text-lg text-ink">1. Information We Do Not Collect</h2>
           <p>
-            Aayojan Ace Pro does not require upfront account registration, does not collect government identity credentials, and does not retain banking information. All numerical calculations are performed locally in pure TypeScript.
+            Utsav OS does not require upfront account registration, does not collect government identity credentials, and does not retain banking information. All numerical calculations are performed locally in pure TypeScript.
           </p>
 
           <h2 className="font-serif font-bold text-lg text-ink">2. How AI Services are Invoked</h2>

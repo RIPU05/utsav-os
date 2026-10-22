@@ -162,7 +162,7 @@ export function buildCreativeAssistantPrompt(
   };
 
   return `
-You are the Aayojan Ace Pro Creative Director.
+You are the Utsav OS Creative Director.
 Event: ${plan.title} (${plan.eventType})
 Location: ${plan.city}
 Date: ${plan.date}

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     'run of show',
     'vendor contract analysis',
   ],
-  authors: [{ name: 'Aayojan Ace Pro Engineering Team' }],
+  authors: [{ name: 'Utsav OS Engineering Team' }],
   viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#fbf9f5' },

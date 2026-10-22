@@ -1,6 +1,6 @@
-# Architecture Specification — Aayojan ACE Pro
+# Architecture Specification — Utsav OS
 
-This document provides a deep dive into the software architecture, deterministic engines, security guarantees, and GenAI integration of **Aayojan ACE Pro**.
+This document provides a deep dive into the software architecture, deterministic engines, security guarantees, and GenAI integration of **Utsav OS**.
 
 ---
 
@@ -8,7 +8,7 @@ This document provides a deep dive into the software architecture, deterministic
 
 A common pitfall in GenAI applications is relying on Large Language Models to calculate arithmetic (budgets, sums, variances) and temporal logic (calendar date reflow, dependency chains, overlap detection). LLMs hallucinate numbers and miss edge-case constraints.
 
-**Aayojan ACE Pro** implements a **Hybrid Architecture**:
+**Utsav OS** implements a **Hybrid Architecture**:
 1. **GenAI Layer:** Synthesizes creative concepts, vendor interview questions, culinary pairings, risk identification, and qualitative schedule activities.
 2. **Deterministic Core:** All mathematical totals, variance alerts, category cap enforcement, date reflow, conflict detection, staffing deficit checks, and life safety crowd capacity metrics are executed by pure, unit-tested TypeScript engines.
 
