@@ -1,5 +1,10 @@
+/**
+ * @fileoverview API Route: Generates an expert 6-category event risk register audit
+ * covering dependencies, weather vulnerabilities, permits, dietary/accessibility, cash flow, and single points of failure.
+ */
+
 import { NextResponse } from 'next/server';
-import { eventPlanSchema, riskRegisterSchema, RiskRegister } from '@/lib/schemas';
+import { eventPlanSchema, riskRegisterSchema } from '@/lib/schemas';
 import { callGeminiStructured } from '@/lib/gemini';
 import { checkRequestSafety, handleApiError } from '@/lib/api-helper';
 import { sanitizeObject } from '@/lib/sanitizer';
@@ -7,9 +12,16 @@ import { sanitizeObject } from '@/lib/sanitizer';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-export async function POST(request: Request) {
+/**
+ * Handles incoming POST requests to run an AI risk assessment on an event plan.
+ *
+ * @param {Request} request - Next.js HTTP request containing the serialized EventPlan.
+ * @returns {Promise<NextResponse | Response>} JSON response with the generated RiskRegister or error.
+ * @throws {never} Handled safely via handleApiError.
+ */
+export async function POST(request: Request): Promise<NextResponse | Response> {
   const safety = checkRequestSafety(request);
-  if (!safety.allowed) {
+  if (!safety.allowed && safety.response) {
     return safety.response;
   }
 

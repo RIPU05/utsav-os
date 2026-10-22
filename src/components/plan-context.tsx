@@ -42,7 +42,22 @@ const PlanContext = createContext<PlanContextType | undefined>(undefined);
 const LOCAL_STORAGE_KEY = 'utsav_os_active_plan';
 const HISTORY_STORAGE_KEY = 'utsav_os_plan_history';
 
-export function PlanProvider({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the PlanProvider context wrapper.
+ */
+export interface PlanProviderProps {
+  /** Subtree to wrap with planning state */
+  children: React.ReactNode;
+}
+
+/**
+ * Global reactive planning state provider. Manages active plan hydration,
+ * undo history stacks, calendar date reflows, and WCAG live region announcements.
+ *
+ * @param {PlanProviderProps} props - Provider properties.
+ * @returns {React.ReactElement} Context provider element.
+ */
+export function PlanProvider({ children }: PlanProviderProps): React.ReactElement {
   const [activePlan, setActivePlanState] = useState<EventPlan | null>(null);
   const [planHistory, setPlanHistory] = useState<EventPlan[]>([]);
   const [activeTab, setActiveTab] = useState<WorkspaceTab>('overview');
@@ -295,7 +310,13 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function usePlan() {
+/**
+ * Custom hook to access reactive celebration planning state and mutators.
+ *
+ * @returns {PlanContextType} The active plan context methods and state.
+ * @throws {Error} When invoked outside of an enclosing <PlanProvider />.
+ */
+export function usePlan(): PlanContextType {
   const context = useContext(PlanContext);
   if (!context) {
     throw new Error('usePlan must be used within a PlanProvider');

@@ -1,40 +1,83 @@
-import { BudgetPlan, BudgetCategory } from './schemas';
+/**
+ * @fileoverview High-precision deterministic budget computation engine.
+ * Computes category aggregations, contingency buffers, statutory service taxes,
+ * variance alerts, and algorithmic fiscal rebalancing suggestions without LLM hallucination.
+ */
+
+import { BudgetPlan } from './schemas';
 import { SUPPORTED_CURRENCIES, CurrencyCode, DEFAULT_CURRENCY } from './constants';
 
+/**
+ * Detailed breakdown of allocations, caps, and variance for a single budget category.
+ */
 export interface CategoryBreakdown {
+  /** Unique category identifier */
   id: string;
+  /** Display name of the category (e.g. Venue & Catering) */
   name: string;
+  /** User target estimated allocation */
   targetEstimate: number;
+  /** Estimated lower bound expenditure */
   minEstimate: number;
+  /** Estimated upper bound expenditure */
   maxEstimate: number;
+  /** Optional hard ceiling cap */
   capLimit?: number;
+  /** Actual recorded expenditure to date */
   actualSpent: number;
+  /** Target percentage relative to overall event budget */
   percentOfBudget: number;
+  /** Target percentage relative to subtotal of categories */
   percentOfSubtotal: number;
+  /** Flag indicating whether targetEstimate exceeds capLimit */
   isOverCap: boolean;
-  varianceAmount: number; // actualSpent - targetEstimate
+  /** Difference between actualSpent and targetEstimate (positive indicates overrun) */
+  varianceAmount: number;
 }
 
+/**
+ * Comprehensive financial summary of the event budget.
+ */
 export interface BudgetSummary {
+  /** Overall user-specified total budget */
   totalBudget: number;
+  /** Sum of all category target estimates */
   subtotalTarget: number;
+  /** Sum of category minimum bounds */
   subtotalMin: number;
+  /** Sum of category maximum bounds */
   subtotalMax: number;
+  /** Contingency buffer percentage (0-30%) */
   contingencyPercent: number;
+  /** Absolute contingency reserve funds */
   contingencyAmount: number;
+  /** Statutory service tax charge percentage */
   taxServiceChargePercent: number;
+  /** Absolute statutory service tax amount */
   taxServiceChargeAmount: number;
+  /** Total committed funds including categories, contingency, and tax */
   totalCommitted: number;
+  /** Total actual funds spent across all categories */
   totalActualSpent: number;
+  /** Surplus or deficit remaining from total budget */
   remainingBudget: number;
+  /** Flag indicating if total committed funds exceed total budget */
   isOverBudget: boolean;
+  /** Absolute deficit amount if over budget, else 0 */
   overBudgetAmount: number;
+  /** Array of itemized category breakdowns */
   categoryBreakdowns: CategoryBreakdown[];
+  /** Warning messages triggered by caps or spending overruns */
   varianceAlerts: string[];
 }
 
 /**
  * Deterministic budget calculation engine. Zero LLM arithmetic hallucinations.
+ *
+ * @param {BudgetPlan} budget - Budget plan structure containing categories and percentage modifiers.
+ * @param {number} totalBudget - High-level target event budget cap.
+ * @returns {BudgetSummary} Complete fiscal ledger calculation including breakdown and variance alerts.
+ * @throws {never} Handles missing or malformed inputs with safe defaults.
  */
 export function calculateBudgetSummary(
   budget: BudgetPlan,
@@ -122,6 +165,11 @@ export function calculateBudgetSummary(
 
 /**
  * Generates algorithmic rebalancing suggestions when budget is exceeded or imbalanced.
+ *
+ * @param {BudgetSummary} summary - Calculated budget summary ledger.
+ * @param {string} [currency=DEFAULT_CURRENCY] - Currency symbol for formatted advice.
+ * @returns {string[]} Array of human-readable, prioritized financial recommendations.
+ * @throws {never} Safely returns contextual advice without throwing.
  */
 export function generateCostRebalancingSuggestions(
   summary: BudgetSummary,
@@ -167,6 +215,11 @@ export function generateCostRebalancingSuggestions(
 
 /**
  * Culture and locale-aware currency formatter with fallback safety.
+ *
+ * @param {number} amount - Numeric value to format.
+ * @param {string} [currencyCode] - ISO 4217 Currency Code (e.g. INR, USD, EUR, GBP).
+ * @returns {string} Formatted localized currency string.
+ * @throws {never} Falls back to standard locale string upon unknown formatting errors.
  */
 export function formatCurrency(amount: number, currencyCode?: string): string {
   const validCode = (currencyCode || DEFAULT_CURRENCY).toUpperCase() as CurrencyCode;

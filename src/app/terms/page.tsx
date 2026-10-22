@@ -2,7 +2,12 @@ import React from 'react';
 import { AppShell } from '@/components/app-shell';
 import { ScrollText, ShieldAlert } from 'lucide-react';
 
-export default function TermsPage() {
+/**
+ * Terms of Service and Event Planning Disclaimers page.
+ *
+ * @returns {React.ReactElement} The terms of service view.
+ */
+export default function TermsPage(): React.ReactElement {
   return (
     <AppShell>
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">

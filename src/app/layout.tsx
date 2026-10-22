@@ -29,11 +29,18 @@ export const viewport: Viewport = {
   ],
 };
 
+/**
+ * Root document layout providing HTML structure, font smoothing, WCAG skip link,
+ * ThemeProvider, and reactive PlanProvider context.
+ *
+ * @param {{ children: React.ReactNode }} props - Layout properties.
+ * @returns {React.ReactElement} The root HTML layout.
+ */
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}): React.ReactElement {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased min-h-screen flex flex-col bg-paper text-ink selection:bg-accent-subtle selection:text-ink">

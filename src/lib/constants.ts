@@ -1,5 +1,6 @@
 /**
- * Aayojan Ace Pro - Master Domain Constants
+ * @fileoverview Utsav OS - Master domain constants, currencies, enum arrays,
+ * and WCAG accessibility guidelines metadata.
  */
 
 export const APP_NAME = 'Utsav OS';

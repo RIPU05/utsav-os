@@ -1,16 +1,34 @@
-import { VendorItem, VendorStatus, VendorQuoteComparison } from './schemas';
-import { VENDOR_STATUS_PIPELINE } from './constants';
+/**
+ * @fileoverview Vendor procurement engine and contract risk auditor.
+ * Tracks the 4-stage procurement machine (Lead -> Quoted -> Signed -> Paid),
+ * analyzes vendor contracts for missing protective clauses (cancellation, force majeure,
+ * overtime caps, insurance), and performs multicriteria quote comparisons.
+ */
 
+import { VendorItem, VendorStatus } from './schemas';
+
+/**
+ * Summary metrics for the vendor procurement pipeline.
+ */
 export interface PipelineSummary {
+  /** Count of vendors in Lead or Shortlisted discovery stages */
   leadCount: number;
+  /** Count of vendors in Contacted or Quoted proposal stages */
   quotedCount: number;
+  /** Count of vendors with signed agreements */
   signedCount: number;
+  /** Count of vendors with fully settled invoices */
   paidCount: number;
+  /** Total value of committed contracts and signed agreements */
   totalCommittedContractValue: number;
 }
 
 /**
  * Calculates metrics across the procurement pipeline (Lead -> Quoted -> Signed -> Paid).
+ *
+ * @param {VendorItem[]} vendors - Array of vendor items in the event plan.
+ * @returns {PipelineSummary} Pipeline volume and financial commitment figures.
+ * @throws {never} Safely returns zero counts for empty arrays.
  */
 export function calculatePipelineSummary(vendors: VendorItem[]): PipelineSummary {
   let leadCount = 0;
@@ -44,6 +62,12 @@ export function calculatePipelineSummary(vendors: VendorItem[]): PipelineSummary
 
 /**
  * Validates whether a state transition along the vendor pipeline is permitted.
+ *
+ * @param {VendorStatus} currentStatus - Existing vendor stage.
+ * @param {VendorStatus} targetStatus - Proposed new stage.
+ * @param {VendorItem} vendor - Vendor entity being updated.
+ * @returns {{ allowed: boolean; reason?: string }} Result indicating whether transition is valid.
+ * @throws {never}
  */
 export function validateStatusTransition(
   currentStatus: VendorStatus,
@@ -67,6 +91,11 @@ export function validateStatusTransition(
 
 /**
  * Analyzes vendor contract terms for missing protective clauses.
+ *
+ * @param {string} termsText - Raw contract terms text or agreement notes.
+ * @returns {{ score: number; foundClauses: string[]; missingClauses: string[]; riskRating: 'Low Risk' | 'Moderate Risk' | 'High Risk' }}
+ * Contract compliance evaluation object.
+ * @throws {never}
  */
 export function analyzeContractTerms(termsText: string): {
   score: number; // 0 to 100
@@ -111,6 +140,13 @@ export function analyzeContractTerms(termsText: string): {
 
 /**
  * Compares two or more quote options deterministically.
+ *
+ * @param {string} vendorCategory - Category name (e.g. Photography).
+ * @param {Array<{ bidder: string; amount: number; terms: string }>} quotes - Array of competing bids.
+ * @param {number} allocatedBudget - Budget amount budgeted for this category.
+ * @returns {{ recommendedBidder: string; varianceSummary: string; comparisonItems: Array<{ bidder: string; variancePercent: number; contractScore: number }> }}
+ * Multi-criteria comparative assessment.
+ * @throws {never}
  */
 export function compareVendorQuotes(
   vendorCategory: string,

@@ -8,20 +8,24 @@ import {
   calculateCrowdCapacityMetrics,
   getDefaultCommunityPermits,
 } from '@/lib/community-engine';
-import { PERMIT_STATUSES, PermitStatus, VOLUNTEER_ROLES } from '@/lib/constants';
+import { PermitStatus } from '@/lib/constants';
+import { PermitRow, VolunteerShiftCard, CapacityMeter } from '@/components/ui-sub';
 import {
   ShieldCheck,
   Users,
   Building2,
   AlertTriangle,
-  CheckCircle2,
-  Clock,
-  UserPlus,
   Scale,
   Sparkles,
 } from 'lucide-react';
 
-export function TabCommunity() {
+/**
+ * Community coordination tab component managing municipal permits,
+ * volunteer shift rosters, and Life Safety crowd capacity calculations.
+ *
+ * @returns {React.ReactElement | null} The rendered tab screen.
+ */
+export function TabCommunity(): React.ReactElement | null {
   const {
     activePlan,
     updatePermitStatus,
@@ -37,7 +41,7 @@ export function TabCommunity() {
   const isCommunity = activePlan.eventType === 'Community Event';
 
   // If user opened this tab for a Wedding or Birthday, provide option to initialize community modules
-  const handleEnableCommunityModules = () => {
+  const handleEnableCommunityModules = (): void => {
     const permits = getDefaultCommunityPermits();
     const volunteerShifts = [
       {
@@ -78,11 +82,22 @@ export function TabCommunity() {
     activePlan.guestCount
   );
 
-  const handleAddVolunteer = (shiftId: string) => {
+  const handleAddVolunteer = (shiftId: string): void => {
     const name = (newVolunteerName[shiftId] || '').trim();
     if (!name) return;
     assignVolunteer(shiftId, name);
     setNewVolunteerName((prev) => ({ ...prev, [shiftId]: '' }));
+  };
+
+  const handlePermitStatusChange = (permitId: string, newStatus: PermitStatus): void => {
+    updatePermitStatus(permitId, newStatus);
+  };
+
+  const handleVolunteerInputChange = (shiftId: string, value: string): void => {
+    setNewVolunteerName((prev) => ({
+      ...prev,
+      [shiftId]: value,
+    }));
   };
 
   return (
@@ -224,37 +239,11 @@ export function TabCommunity() {
             </thead>
             <tbody className="divide-y divide-rule text-ink">
               {activePlan.permits.map((permit) => (
-                <tr key={permit.id} className="hover:bg-paper-subtle/40 transition-colors">
-                  <td className="p-4">
-                    <span className="font-bold text-ink block">{permit.permitType}</span>
-                    <span className="text-xs text-ink-muted">{permit.authorityName}</span>
-                  </td>
-                  <td className="p-4 font-mono text-ink-muted">
-                    {permit.requiredByDaysBefore} days before
-                  </td>
-                  <td className="p-4 font-mono text-ink-faint">
-                    {permit.referenceNumber || 'Pending'}
-                  </td>
-                  <td className="p-4">
-                    <select
-                      value={permit.status}
-                      onChange={(e) =>
-                        updatePermitStatus(permit.id, e.target.value as PermitStatus)
-                      }
-                      aria-label={`Update status for ${permit.permitType}`}
-                      className="min-h-[40px] rounded-lg border border-rule bg-paper px-2.5 py-1 text-xs font-bold text-ink focus:border-accent"
-                    >
-                      {PERMIT_STATUSES.map((status) => (
-                        <option key={status} value={status}>
-                          {status}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td className="p-4 text-xs text-ink-muted max-w-xs leading-relaxed">
-                    {permit.notes}
-                  </td>
-                </tr>
+                <PermitRow
+                  key={permit.id}
+                  permit={permit}
+                  onStatusChange={handlePermitStatusChange}
+                />
               ))}
             </tbody>
           </table>
@@ -279,103 +268,19 @@ export function TabCommunity() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {activePlan.volunteerShifts.map((shift) => (
-            <div
+            <VolunteerShiftCard
               key={shift.id}
-              className="p-4 rounded-xl border border-rule bg-paper-subtle/30 flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-start justify-between gap-2 mb-1">
-                  <h4 className="text-sm font-bold text-ink">{shift.shiftTitle}</h4>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-paper-card border border-rule text-ink-muted">
-                    {shift.startTime} - {shift.endTime}
-                  </span>
-                </div>
-                <span className="text-xs font-mono text-accent font-semibold block mb-2">
-                  Role: {shift.role}
-                </span>
-
-                <div className="text-xs text-ink-muted mb-3">
-                  <span className="font-medium text-ink">Assigned: </span>
-                  {shift.assignedVolunteers.length > 0 ? (
-                    <span>{shift.assignedVolunteers.join(', ')}</span>
-                  ) : (
-                    <span className="text-state-warning italic">No volunteers assigned yet</span>
-                  )}
-                  <span className="font-mono text-ink-faint block mt-0.5">
-                    ({shift.assignedVolunteers.length} / {shift.requiredCount} required)
-                  </span>
-                </div>
-              </div>
-
-              {/* Add Volunteer Input */}
-              <div className="flex items-center gap-2 pt-3 border-t border-rule">
-                <input
-                  type="text"
-                  placeholder="Volunteer name..."
-                  value={newVolunteerName[shift.id] || ''}
-                  onChange={(e) =>
-                    setNewVolunteerName((prev) => ({
-                      ...prev,
-                      [shift.id]: e.target.value,
-                    }))
-                  }
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      handleAddVolunteer(shift.id);
-                    }
-                  }}
-                  className="flex-1 min-h-[40px] px-3 py-1 text-xs rounded-lg border border-rule bg-paper text-ink focus:border-accent"
-                  aria-label={`Add volunteer for ${shift.shiftTitle}`}
-                />
-                <button
-                  type="button"
-                  onClick={() => handleAddVolunteer(shift.id)}
-                  className="min-h-[40px] px-3 py-1 rounded-lg bg-accent text-accent-text text-xs font-bold hover:bg-accent-hover transition-colors flex items-center gap-1"
-                >
-                  <UserPlus className="h-3.5 w-3.5" aria-hidden="true" />
-                  <span>Assign</span>
-                </button>
-              </div>
-            </div>
+              shift={shift}
+              inputValue={newVolunteerName[shift.id] || ''}
+              onInputChange={handleVolunteerInputChange}
+              onAssign={handleAddVolunteer}
+            />
           ))}
         </div>
       </div>
 
       {/* SECTION 3: Crowd Capacity & Safety Recommendations */}
-      <div className="rounded-2xl border border-rule bg-paper-card p-6 shadow-xs">
-        <div className="flex items-center gap-2 mb-3">
-          <Scale className="h-5 w-5 text-accent" aria-hidden="true" />
-          <h3 className="font-serif font-black text-lg text-ink">
-            Life Safety Code Venue Assessment
-          </h3>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4 text-xs">
-          <div className="p-3 rounded-xl bg-paper-subtle/50">
-            <span className="text-ink-muted block">Usable Venue Area:</span>
-            <span className="font-mono font-bold text-ink text-sm">
-              {capacityMetrics.venueAreaSqFt.toLocaleString()} sq.ft
-            </span>
-          </div>
-          <div className="p-3 rounded-xl bg-paper-subtle/50">
-            <span className="text-ink-muted block">Planned Guests:</span>
-            <span className="font-mono font-bold text-ink text-sm">
-              {capacityMetrics.plannedGuestCount.toLocaleString()} attendees
-            </span>
-          </div>
-          <div className="p-3 rounded-xl bg-paper-subtle/50">
-            <span className="text-ink-muted block">Max Safe Occupancy:</span>
-            <span className="font-mono font-bold text-ink text-sm">
-              {capacityMetrics.maxSafeOccupancy.toLocaleString()} attendees
-            </span>
-          </div>
-        </div>
-        <ul className="list-disc list-inside space-y-1.5 text-xs text-ink-muted leading-relaxed">
-          {capacityMetrics.recommendations.map((rec, i) => (
-            <li key={i}>{rec}</li>
-          ))}
-        </ul>
-      </div>
+      <CapacityMeter capacityMetrics={capacityMetrics} />
     </div>
   );
 }

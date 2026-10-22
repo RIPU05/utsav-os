@@ -8,24 +8,24 @@ import {
   detectDayOfScheduleConflicts,
   generateTimelineIcs,
   exportTimelineToCsv,
-  exportTimelineToJson,
 } from '@/lib/timeline-engine';
+import { MilestoneTaskItem, DayOfSlotRow } from '@/components/ui-sub';
 import {
-  Calendar,
   CalendarCheck,
-  CheckCircle2,
-  Circle,
-  User,
-  Tag,
   Info,
   Clock,
   AlertTriangle,
-  Download,
   ListOrdered,
   FileSpreadsheet,
 } from 'lucide-react';
 
-export function TabTimeline() {
+/**
+ * Interactive Timeline & Day-of Scheduler tab component providing dual-view milestone
+ * and minute-by-minute day-of schedule management, date reflow calculation, and exports.
+ *
+ * @returns {React.ReactElement | null} The rendered timeline tab screen.
+ */
+export function TabTimeline(): React.ReactElement | null {
   const {
     activePlan,
     toggleTaskCompletion,
@@ -49,13 +49,13 @@ export function TabTimeline() {
 
   if (!activePlan) return null;
 
-  const handleDateShift = (e: React.FormEvent) => {
+  const handleDateShift = (e: React.FormEvent): void => {
     e.preventDefault();
     if (!newEventDateInput || newEventDateInput === activePlan.date) return;
     updateEventDate(newEventDateInput);
   };
 
-  const handleExportIcs = () => {
+  const handleExportIcs = (): void => {
     const icsContent = generateTimelineIcs(activePlan.title, activePlan.timeline);
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -67,7 +67,7 @@ export function TabTimeline() {
     announce('Exported .ics calendar file.');
   };
 
-  const handleExportCsv = () => {
+  const handleExportCsv = (): void => {
     const csvContent = exportTimelineToCsv(activePlan.timeline, activePlan.dayOfSchedule);
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -219,64 +219,11 @@ export function TabTimeline() {
 
                 <div className="ml-1.5 pl-6 border-l-2 border-rule space-y-3 mt-3">
                   {tasksInPhase.map((task) => (
-                    <div
+                    <MilestoneTaskItem
                       key={task.id}
-                      className={`rounded-2xl border p-4 transition-all ${
-                        task.completed
-                          ? 'border-rule/60 bg-paper-subtle/30 opacity-75'
-                          : 'border-rule bg-paper-card shadow-xs hover:border-accent'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex items-start gap-3">
-                          <button
-                            type="button"
-                            onClick={() => toggleTaskCompletion(task.id)}
-                            aria-label={`Mark task "${task.title}" as ${
-                              task.completed ? 'pending' : 'complete'
-                            }`}
-                            className="mt-0.5 rounded-full p-1 text-accent hover:bg-accent-subtle transition-colors focus-visible:ring-2 focus-visible:ring-accent"
-                          >
-                            {task.completed ? (
-                              <CheckCircle2 className="h-5 w-5 text-state-success" aria-hidden="true" />
-                            ) : (
-                              <Circle className="h-5 w-5 text-ink-faint hover:text-accent" aria-hidden="true" />
-                            )}
-                          </button>
-                          <div>
-                            <h4
-                              className={`text-sm font-bold text-ink ${
-                                task.completed ? 'line-through text-ink-muted' : ''
-                              }`}
-                            >
-                              {task.title}
-                            </h4>
-                            <p className="mt-1 text-xs text-ink-muted leading-relaxed">
-                              {task.description}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="text-right shrink-0">
-                          <span className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-ink">
-                            <Calendar className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                            {task.dueDate}
-                          </span>
-                          {task.owner && (
-                            <span className="mt-1 flex items-center justify-end gap-1 text-[11px] text-ink-muted">
-                              <User className="h-3 w-3" aria-hidden="true" />
-                              {task.owner}
-                            </span>
-                          )}
-                          {task.estimatedCostLink && (
-                            <span className="mt-1 flex items-center justify-end gap-1 text-[10px] font-mono text-ink-faint">
-                              <Tag className="h-3 w-3" aria-hidden="true" />
-                              {task.estimatedCostLink}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                      task={task}
+                      onToggleComplete={toggleTaskCompletion}
+                    />
                   ))}
                 </div>
               </section>
@@ -304,44 +251,7 @@ export function TabTimeline() {
 
           <div className="divide-y divide-rule">
             {activePlan.dayOfSchedule.map((slot) => (
-              <div
-                key={slot.id}
-                className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-paper-subtle/30 px-2 rounded-xl transition-colors"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 text-center bg-paper-subtle p-2 rounded-xl min-w-[70px]">
-                    <span className="text-sm font-mono font-black text-ink block">
-                      {slot.time}
-                    </span>
-                    <span className="text-[10px] font-mono text-ink-muted">
-                      {slot.durationMinutes} min
-                    </span>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-bold text-ink">
-                        {slot.activityTitle}
-                      </h4>
-                      {slot.isCritical && (
-                        <span className="px-2 py-0.2 rounded text-[10px] font-mono font-bold bg-state-error/15 text-state-error">
-                          CRITICAL CUE
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-ink-muted mt-0.5">
-                      Location: <strong className="text-ink">{slot.location}</strong> &bull; Lead:{' '}
-                      <strong className="text-ink">{slot.leadPerson}</strong>
-                      {slot.vendorRole && ` (${slot.vendorRole})`}
-                    </p>
-                    {slot.notes && (
-                      <p className="text-[11px] text-ink-faint italic mt-1">
-                        Note: {slot.notes}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <DayOfSlotRow key={slot.id} slot={slot} />
             ))}
           </div>
         </div>

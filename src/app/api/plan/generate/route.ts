@@ -1,3 +1,8 @@
+/**
+ * @fileoverview API Route: Generates a comprehensive, culture-aware event plan
+ * across budget, timeline, vendors, permits, volunteer shifts, and creative concepts.
+ */
+
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import {
@@ -46,9 +51,16 @@ const rawGeminiPlanSchema = z.object({
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-export async function POST(request: Request) {
+/**
+ * Handles incoming POST requests to synthesize complete multi-module event plans.
+ *
+ * @param {Request} request - Next.js HTTP request containing intake parameters and follow-up answers.
+ * @returns {Promise<NextResponse | Response>} JSON response containing the synthesized EventPlan or error.
+ * @throws {never} Handled safely via handleApiError.
+ */
+export async function POST(request: Request): Promise<NextResponse | Response> {
   const safety = checkRequestSafety(request);
-  if (!safety.allowed) {
+  if (!safety.allowed && safety.response) {
     return safety.response;
   }
 

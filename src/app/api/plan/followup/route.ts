@@ -1,3 +1,8 @@
+/**
+ * @fileoverview API Route: Generates targeted follow-up questions tailored to intake parameters.
+ * Caches questions using deterministic input hashing.
+ */
+
 import { NextResponse } from 'next/server';
 import { intakeFormSchema, followUpResponseSchema } from '@/lib/schemas';
 import { buildFollowUpPrompt } from '@/lib/prompts';
@@ -9,9 +14,16 @@ import { sanitizeObject } from '@/lib/sanitizer';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-export async function POST(request: Request) {
+/**
+ * Handles incoming POST requests to generate personalized follow-up clarification questions.
+ *
+ * @param {Request} request - Next.js HTTP request containing intake parameters.
+ * @returns {Promise<NextResponse | Response>} JSON response containing follow-up questions or error.
+ * @throws {never} All errors are caught and transformed via handleApiError.
+ */
+export async function POST(request: Request): Promise<NextResponse | Response> {
   const safety = checkRequestSafety(request);
-  if (!safety.allowed) {
+  if (!safety.allowed && safety.response) {
     return safety.response;
   }
 

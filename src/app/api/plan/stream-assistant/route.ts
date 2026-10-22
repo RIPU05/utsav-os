@@ -1,3 +1,8 @@
+/**
+ * @fileoverview API Route: Real-time Server-Sent Events (SSE) streaming endpoint
+ * for AI creative generation (invitations, menus, themes, run-of-show scripts).
+ */
+
 import { z } from 'zod';
 import { eventPlanSchema } from '@/lib/schemas';
 import { buildCreativeAssistantPrompt } from '@/lib/prompts';
@@ -14,9 +19,16 @@ const assistantRequestSchema = z.object({
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export async function POST(request: Request) {
+/**
+ * Handles incoming POST requests to stream generated creative copy via Server-Sent Events (SSE).
+ *
+ * @param {Request} request - Next.js HTTP request with assistant prompt parameters.
+ * @returns {Promise<Response>} Text/event-stream response stream or JSON error response.
+ * @throws {never} Handled safely via controller error propagation and HTTP 400 responses.
+ */
+export async function POST(request: Request): Promise<Response> {
   const safety = checkRequestSafety(request);
-  if (!safety.allowed) {
+  if (!safety.allowed && safety.response) {
     return safety.response;
   }
 

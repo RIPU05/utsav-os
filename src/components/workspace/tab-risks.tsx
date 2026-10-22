@@ -5,7 +5,13 @@ import { usePlan } from '../plan-context';
 import { RiskItem, RiskRegister } from '@/lib/schemas';
 import { ShieldAlert, AlertTriangle, RefreshCw, CheckCircle2 } from 'lucide-react';
 
-export function TabRisks() {
+/**
+ * Risk Assessment & Contingency Audit tab identifying potential points of failure,
+ * vendor dependencies, weather vulnerabilities, and actionable mitigation tasks.
+ *
+ * @returns {React.ReactElement | null} The risks dashboard element or null.
+ */
+export function TabRisks(): React.ReactElement | null {
   const { activePlan, announce } = usePlan();
   const [risks, setRisks] = useState<RiskItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);

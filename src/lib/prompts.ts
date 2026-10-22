@@ -1,8 +1,19 @@
+/**
+ * @fileoverview Prompt engineering module for Google Gemini structured generation.
+ * Enforces prompt injection isolation fences (`<<<USER_INPUT_DATA>>>`), strict JSON schemas,
+ * and event-type specialization for Weddings, Birthdays, and Community events.
+ */
+
 import { IntakeFormData, ReplanRequest, EventPlan } from './schemas';
 import { sanitizeInput } from './sanitizer';
 
 /**
  * Builds safe prompt containing user intake wrapped in strict isolation tags.
+ *
+ * @param {IntakeFormData} intake - Sanitized user intake parameters.
+ * @param {Array<{ questionId: string; answer: string }>} [followUpAnswers] - Clarified user answers.
+ * @returns {string} Fully formatted prompt for Gemini.
+ * @throws {never}
  */
 export function buildPlanGenerationPrompt(
   intake: IntakeFormData,
@@ -85,6 +96,10 @@ ${
 
 /**
  * Builds prompt for follow-up ambiguity detection.
+ *
+ * @param {IntakeFormData} intake - User intake parameters to audit.
+ * @returns {string} Gemini prompt text.
+ * @throws {never}
  */
 export function buildFollowUpPrompt(intake: IntakeFormData): string {
   const sanitizedCity = sanitizeInput(intake.city);
@@ -115,6 +130,10 @@ Otherwise return:
 
 /**
  * Builds prompt for budget-aware replanning deltas.
+ *
+ * @param {ReplanRequest} req - Active plan state and proposed shift deltas.
+ * @returns {string} Formatted Gemini prompt for computing atomic diffs.
+ * @throws {never}
  */
 export function buildReplanningPrompt(req: ReplanRequest): string {
   const currentPlan = req.currentPlan;
@@ -146,6 +165,12 @@ Return JSON adhering to replanDiffResponseSchema:
 
 /**
  * Builds prompt for real-time creative assistant streaming.
+ *
+ * @param {'invitation' | 'menu' | 'theme' | 'runOfShow'} promptType - Selected creative domain.
+ * @param {EventPlan} plan - Complete plan context.
+ * @param {string} [userNotes=''] - Optional host directives.
+ * @returns {string} Formatted system prompt.
+ * @throws {never}
  */
 export function buildCreativeAssistantPrompt(
   promptType: 'invitation' | 'menu' | 'theme' | 'runOfShow',

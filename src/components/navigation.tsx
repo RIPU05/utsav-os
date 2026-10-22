@@ -20,7 +20,13 @@ const NAV_ITEMS = [
   { href: '/terms', label: 'Terms', icon: ScrollText },
 ];
 
-export function Navigation() {
+/**
+ * Primary responsive navigation component providing persistent desktop sidebar
+ * and thumb-friendly mobile bottom tab bar navigation.
+ *
+ * @returns {React.ReactElement} The navigation elements.
+ */
+export function Navigation(): React.ReactElement {
   const pathname = usePathname();
 
   return (

@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Robust Google Gemini SDK integration engine with JSON schema enforcement,
+ * timeout races, exponential backoff retries, and automated fallback model cascades.
+ */
+
 import { GoogleGenAI } from '@google/genai';
 import { z } from 'zod';
 
@@ -6,17 +11,36 @@ const DEFAULT_FALLBACK_MODEL = 'gemini-3.5-flash';
 const DEFAULT_TIMEOUT_MS = 25000;
 const MAX_RETRIES = 2;
 
+/**
+ * Execution parameters for Gemini API invocations.
+ */
 export interface GeminiCallOptions {
+  /** Maximum execution duration in milliseconds before timing out */
   timeoutMs?: number;
+  /** Maximum retry attempts upon transient or rate-limited errors */
   maxRetries?: number;
+  /** Temperature sampling parameter between 0.0 and 1.0 */
   temperature?: number;
+  /** Optional pre-configured GoogleGenAI client instance for testing */
   customClient?: GoogleGenAI;
 }
 
+/**
+ * Standardized error class representing failures during Gemini AI inference.
+ */
 export class GeminiApiError extends Error {
+  /** HTTP status code associated with this error */
   public statusCode: number;
+  /** Indicates whether client should attempt retrying this operation */
   public isRetryable: boolean;
 
+  /**
+   * Constructs a new GeminiApiError.
+   *
+   * @param {string} message - Human-readable diagnostic message.
+   * @param {number} [statusCode=500] - HTTP status code.
+   * @param {boolean} [isRetryable=false] - Whether this condition is transient.
+   */
   constructor(message: string, statusCode = 500, isRetryable = false) {
     super(message);
     this.name = 'GeminiApiError';
@@ -27,6 +51,10 @@ export class GeminiApiError extends Error {
 
 /**
  * Extracts clean JSON string by stripping potential markdown code fences.
+ *
+ * @param {string} rawText - Raw string from LLM output.
+ * @returns {string} Stripped JSON string ready for parsing.
+ * @throws {never} Handles arbitrary string input safely.
  */
 export function extractJsonFromResponse(rawText: string): string {
   const trimmed = rawText.trim();
@@ -38,6 +66,12 @@ export function extractJsonFromResponse(rawText: string): string {
   return trimmed;
 }
 
+/**
+ * Normalizes an unknown caught error into a string message.
+ *
+ * @param {unknown} err - Error instance or value.
+ * @returns {string} Normalized message string.
+ */
 function toErrorMessage(err: unknown): string {
   if (err instanceof Error) return err.message;
   return String(err || 'Unknown error');
@@ -46,6 +80,9 @@ function toErrorMessage(err: unknown): string {
 /**
  * Creates or retrieves the GoogleGenAI client using server-only environment variables.
  * Guarantees zero client-side key leakage.
+ *
+ * @returns {GoogleGenAI} Initialized GoogleGenAI client instance.
+ * @throws {GeminiApiError} When `GEMINI_API_KEY` is not configured in server environment.
  */
 export function getGeminiClient(): GoogleGenAI {
   const apiKey = process.env.GEMINI_API_KEY;
@@ -60,8 +97,15 @@ export function getGeminiClient(): GoogleGenAI {
 }
 
 /**
- * Executes a Gemini request with structured output, retries, exponential backoff,
+ * Executes a Gemini request with structured JSON output, retries, exponential backoff,
  * and automatic fallback model cascade.
+ *
+ * @template T
+ * @param {string} prompt - Prompt instruction text.
+ * @param {z.ZodType<T>} schema - Target Zod validation schema.
+ * @param {GeminiCallOptions} [options={}] - Execution options.
+ * @returns {Promise<T>} Validated and typed object matching schema.
+ * @throws {GeminiApiError} When generation fails or schema validation rejects the payload.
  */
 export async function callGeminiStructured<T>(
   prompt: string,
@@ -164,6 +208,11 @@ export async function callGeminiStructured<T>(
 
 /**
  * Server-side streaming generator for real-time assistant responses.
+ *
+ * @param {string} prompt - Prompt instructions for creative generation.
+ * @param {GeminiCallOptions} [options={}] - Streaming options.
+ * @returns {AsyncGenerator<string, void, unknown>} Asynchronous generator yielding text chunks.
+ * @throws {GeminiApiError} When client creation or stream connection fails.
  */
 export async function* streamGeminiContent(
   prompt: string,

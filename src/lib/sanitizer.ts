@@ -1,7 +1,17 @@
 /**
+ * @fileoverview Zero-dependency string and object sanitization engine.
+ * Strips dangerous HTML entities, script injection vectors, null bytes,
+ * inline styles, and event handlers to prevent XSS.
+ */
+
+/**
  * Sanitizes untrusted string input by removing potential HTML tags, scripts,
  * style blocks, iframes, event handlers, and dangerous URI protocols to guarantee
  * zero-trust input safety without heavyweight server-side DOM emulation issues.
+ *
+ * @param {string | undefined | null} input - Raw string input from user or untrusted payload.
+ * @returns {string} Clean, safe string stripped of malicious tokens.
+ * @throws {never} This pure function never throws.
  */
 export function sanitizeInput(input: string | undefined | null): string {
   if (!input) return '';
@@ -28,6 +38,11 @@ export function sanitizeInput(input: string | undefined | null): string {
 
 /**
  * Recursively sanitizes all string properties within an arbitrary object or array.
+ *
+ * @template T
+ * @param {T} data - Object, array, or primitive data structure to sanitize.
+ * @returns {T} Deeply sanitized copy of the input data structure.
+ * @throws {never} This pure function handles all types gracefully without throwing.
  */
 export function sanitizeObject<T>(data: T): T {
   if (typeof data === 'string') {

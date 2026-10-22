@@ -23,6 +23,7 @@ export default defineConfig({
         'tailwind.config.ts',
         'next.config.mjs',
         'vitest.config.ts',
+        'record_demo.js',
         'src/app/layout.tsx',
         'src/app/api/**',
       ],

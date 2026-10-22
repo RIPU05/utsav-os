@@ -8,7 +8,12 @@ import { SAVED_EXAMPLES } from '@/data/saved-examples';
 import { formatCurrency } from '@/lib/budget-engine';
 import { BookmarkCheck, ArrowRight, Download, Users, Calendar, MapPin } from 'lucide-react';
 
-export default function SavedPage() {
+/**
+ * Curated preset library page showcasing gold-standard demonstration plans.
+ *
+ * @returns {React.ReactElement} The preset library view.
+ */
+export default function SavedPage(): React.ReactElement {
   const router = useRouter();
   const { loadSavedExample, announce } = usePlan();
 

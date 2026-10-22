@@ -2,7 +2,12 @@ import React from 'react';
 import { AppShell } from '@/components/app-shell';
 import { ShieldCheck, Lock, EyeOff, Server } from 'lucide-react';
 
-export default function PrivacyPage() {
+/**
+ * Privacy Policy and Zero-Data-Retention disclosure page.
+ *
+ * @returns {React.ReactElement} The privacy policy view.
+ */
+export default function PrivacyPage(): React.ReactElement {
   return (
     <AppShell>
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">

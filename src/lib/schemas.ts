@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Complete Zod runtime schemas and TypeScript types for Utsav OS.
+ * Governs intake validation, budget plans, milestone tasks, day-of run-of-show cues,
+ * vendor procurement, community municipal permits, volunteer shifts, and risk registers.
+ */
+
 import { z } from 'zod';
 import {
   EVENT_TYPES,
@@ -15,6 +21,13 @@ import {
 } from './constants';
 
 export type { VendorStatus, TimelinePhase, RiskSeverity, PermitStatus, VolunteerRole };
+export {
+  EVENT_TYPES,
+  TIMELINE_PHASES,
+  VENDOR_STATUS_PIPELINE,
+  PERMIT_STATUSES,
+  VOLUNTEER_ROLES,
+};
 
 export const currencyCodeSchema = z.enum([
   'INR',

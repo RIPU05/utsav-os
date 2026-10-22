@@ -4,7 +4,12 @@ import React from 'react';
 import { useTheme } from './theme-provider';
 import { Sun, Moon, Laptop } from 'lucide-react';
 
-export function ThemeToggle() {
+/**
+ * Theme toggle button component supporting light, dark, and system preference cycles.
+ *
+ * @returns {React.ReactElement} The theme switch button.
+ */
+export function ThemeToggle(): React.ReactElement {
   const { theme, resolvedTheme, setTheme } = useTheme();
 
   const cycleTheme = () => {

@@ -124,3 +124,34 @@ const stream = new ReadableStream({
    - Centralized `announce(message)` utility dispatches messages to an off-screen `div` marked with `aria-live="polite"` and `role="status"`.
 3. **Contrast & Theme Tokenization:**
    - Dual theme system (Light & Dark) using HSL CSS variables configured for >= 4.5:1 text-to-background contrast ratios.
+
+---
+
+## 5. Component Modularity & UI Hardening Architecture
+
+### 5.1 Atomic UI Deconstruction (`src/components/ui-sub/`)
+To achieve peak modularity, single-responsibility separation, and maintainability, workspace view tabs are deconstructed into atomic, testable sub-components:
+- `BudgetStatCard`: Key metric cards with trend indicators and accessible ARIA attributes.
+- `BudgetStackedBar`: Visual financial allocation bar with proportional segment dividers and legend.
+- `BudgetCategoryRow`: Ledger row handling target estimation, spend tracking, and cap overages.
+- `PermitRow`: Municipal permit checklist item with authority details and status selectors.
+- `VolunteerShiftCard`: Shift schedule card displaying roster badges, staffing deficit warnings, and volunteer assignment inputs.
+- `CapacityMeter`: Real-time NFPA 101 crowd safety density gauge with dynamic recommendations.
+- `MilestoneTaskItem`: Long-term planning task card with checkbox toggling and metadata tags.
+- `DayOfSlotRow`: Chronological cue in the minute-by-minute master run-of-show.
+- `VendorPipelineCard`: 4-stage procurement stage card with automated contract clause risk scoring.
+
+### 5.2 Stateless Pure Mathematical Utilities (`src/lib/ui-math.ts`)
+Inline arithmetic calculations are extracted into pure, stateless utilities with strict TSDoc:
+- `calculateCommitmentPercent`: Safely calculates budget commitment without floating-point drift.
+- `calculateCategoryProgressPercent`: Clamps spend ratios cleanly between 0 and 100%.
+- `calculateShiftDeficit`: Computes exact missing volunteer headcounts.
+- `calculateStaffingFillRatio`: Computes roster fill percentage.
+- `clampPercentage`: Bounded range clamping with strict boundary range validation.
+
+### 5.3 Error Boundaries & Graceful Degradation (`src/components/error-boundary.tsx`)
+The application is wrapped with a React `ErrorBoundary` supporting:
+- Accessible WCAG-compliant alert notifications (`role="alert"`, `aria-live="assertive"`).
+- Fault isolation preventing single-component rendering bugs from crashing the root shell.
+- Interactive retry recovery triggers and local storage safety preservation.
+

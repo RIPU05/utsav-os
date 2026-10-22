@@ -16,7 +16,13 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 
-export function TabOverview() {
+/**
+ * Executive overview tab summarizing cross-domain event metrics:
+ * budget commitments, timeline milestones, vendor pipeline, and community readiness.
+ *
+ * @returns {React.ReactElement | null} The overview dashboard element or null.
+ */
+export function TabOverview(): React.ReactElement | null {
   const { activePlan, setActiveTab } = usePlan();
 
   if (!activePlan) return null;

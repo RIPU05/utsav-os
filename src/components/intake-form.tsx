@@ -26,7 +26,13 @@ import {
   HelpCircle,
 } from 'lucide-react';
 
-export function IntakeForm() {
+/**
+ * Interactive event intake form component supporting preset selection,
+ * dynamic validation, ambiguity clarification questions, and plan generation dispatch.
+ *
+ * @returns {React.ReactElement} The intake form view.
+ */
+export function IntakeForm(): React.ReactElement {
   const router = useRouter();
   const { setActivePlan, loadSavedExample, announce } = usePlan();
 

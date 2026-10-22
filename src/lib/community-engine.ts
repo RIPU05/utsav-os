@@ -1,29 +1,54 @@
+/**
+ * @fileoverview Civic and Community event coordination engine.
+ * Computes municipal permit readiness, volunteer shift coverage deficits,
+ * and NFPA 101 / National Building Code crowd density assessments.
+ */
+
 import {
   CommunityPermit,
   VolunteerShift,
   CapacityMetrics,
-  PermitStatus,
-  VolunteerRole,
 } from './schemas';
 
+/**
+ * Diagnostic summary of volunteer staffing coverage across all shifts.
+ */
 export interface VolunteerStaffingReport {
+  /** Sum of volunteer headcounts required across all shifts */
   totalRequired: number;
+  /** Sum of confirmed assigned volunteers */
   totalAssigned: number;
+  /** Unfilled shift positions needing marshals */
   unfilledSlots: number;
+  /** Percentage of filled slots (0-100%) */
   readinessPercent: number;
+  /** Human-readable list of shifts experiencing volunteer deficits */
   criticalDeficits: string[];
 }
 
+/**
+ * Compliance report summarizing municipal filing deadlines and permit statuses.
+ */
 export interface PermitReadinessReport {
+  /** Total number of statutory permits required */
   totalPermits: number;
+  /** Count of permits approved or officially exempt */
   approvedCount: number;
+  /** Count of permits in draft, pending, or under review */
   pendingCount: number;
+  /** Percentage of permits compliant (0-100%) */
   readinessPercent: number;
+  /** Imminent filing deadlines requiring organizer action */
   urgentDeadlines: string[];
 }
 
 /**
- * Calculates crowd capacity and safety metrics adhering to standard life safety codes.
+ * Calculates crowd capacity and safety metrics adhering to standard life safety codes (NFPA 101).
+ *
+ * @param {number} venueAreaSqFt - Usable square footage of event grounds or indoor venue.
+ * @param {number} plannedGuestCount - Estimated or RSVPs attendee count.
+ * @returns {CapacityMetrics} Density analysis, maximum safe threshold, and egress recommendations.
+ * @throws {never} Handles edge cases (zero or negative area) safely.
  */
 export function calculateCrowdCapacityMetrics(
   venueAreaSqFt: number,
@@ -74,6 +99,10 @@ export function calculateCrowdCapacityMetrics(
 
 /**
  * Evaluates volunteer shift coverage and flags staffing deficits.
+ *
+ * @param {VolunteerShift[]} shifts - Array of volunteer shifts configured for the celebration.
+ * @returns {VolunteerStaffingReport} Aggregated volunteer coverage statistics and critical role shortages.
+ * @throws {never} Safely calculates metrics even if shifts list is empty.
  */
 export function calculateVolunteerStaffing(shifts: VolunteerShift[]): VolunteerStaffingReport {
   let totalRequired = 0;
@@ -106,7 +135,12 @@ export function calculateVolunteerStaffing(shifts: VolunteerShift[]): VolunteerS
 }
 
 /**
- * Assesses regulatory and municipal permit compliance.
+ * Assesses regulatory and municipal permit compliance against filing lead times.
+ *
+ * @param {CommunityPermit[]} permits - Municipal and statutory permits.
+ * @param {string} eventDate - ISO string or YYYY-MM-DD date of the event.
+ * @returns {PermitReadinessReport} Approval percentages and impending deadline alerts.
+ * @throws {never} Gracefully handles invalid dates.
  */
 export function calculatePermitReadiness(
   permits: CommunityPermit[],
@@ -146,7 +180,10 @@ export function calculatePermitReadiness(
 }
 
 /**
- * Standard preset community permits for high-attendance civic celebrations.
+ * Provides standard gold-standard presets for municipal permits for community events.
+ *
+ * @returns {CommunityPermit[]} Pre-configured statutory permit checklist.
+ * @throws {never}
  */
 export function getDefaultCommunityPermits(): CommunityPermit[] {
   return [

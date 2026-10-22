@@ -16,7 +16,12 @@ import { ReplanModal } from '@/components/workspace/replan-modal';
 import Link from 'next/link';
 import { Sparkles } from 'lucide-react';
 
-export default function WorkspacePage() {
+/**
+ * Interactive event workspace page routing across 8 specialized domain modules.
+ *
+ * @returns {React.ReactElement} The workspace page.
+ */
+export default function WorkspacePage(): React.ReactElement {
   const { activePlan, activeTab } = usePlan();
 
   return (

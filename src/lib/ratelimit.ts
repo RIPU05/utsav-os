@@ -1,22 +1,48 @@
+/**
+ * @fileoverview Token Bucket in-memory rate limiter with leak-proof cleanup interval
+ * and trusted IP header parsing for API traffic protection.
+ */
+
+/**
+ * Result returned by the token bucket rate limiter evaluation.
+ */
 export interface RateLimitResult {
+  /** Whether the request is permitted within current rate allowance */
   allowed: boolean;
+  /** Number of remaining request tokens in the active window */
   remaining: number;
+  /** Estimated seconds until the client bucket refills or resets */
   resetSeconds: number;
 }
 
+/**
+ * Internal tracking record for a single client IP bucket.
+ */
 interface BucketRecord {
+  /** Fractional count of currently available request tokens */
   tokens: number;
+  /** Milliseconds epoch timestamp of the last token refill calculation */
   lastRefill: number;
 }
 
 const DEFAULT_CAPACITY = 30; // Max requests per window
 const DEFAULT_WINDOW_MS = 60 * 1000; // 60 seconds
 
+/**
+ * In-memory Token Bucket rate limiter that throttles excessive requests
+ * while preventing memory leaks via automatic garbage collection.
+ */
 class TokenBucketRateLimiter {
   private buckets = new Map<string, BucketRecord>();
   private capacity: number;
   private windowMs: number;
 
+  /**
+   * Initializes a new TokenBucketRateLimiter instance.
+   *
+   * @param {number} [capacity=30] - Maximum burst capacity of tokens.
+   * @param {number} [windowMs=60000] - Duration in milliseconds for full bucket replenishment.
+   */
   constructor(capacity = DEFAULT_CAPACITY, windowMs = DEFAULT_WINDOW_MS) {
     this.capacity = capacity;
     this.windowMs = windowMs;
@@ -37,6 +63,13 @@ class TokenBucketRateLimiter {
     }
   }
 
+  /**
+   * Checks whether the given client identifier is permitted to execute a request.
+   *
+   * @param {string} identifier - Unique client key (typically an IP address).
+   * @returns {RateLimitResult} Status indicating whether request is allowed and remaining tokens.
+   * @throws {never} This method is guarded against throwing.
+   */
   public check(identifier: string): RateLimitResult {
     const now = Date.now();
     let record = this.buckets.get(identifier);
@@ -70,6 +103,9 @@ class TokenBucketRateLimiter {
   }
 }
 
+/**
+ * Shared singleton instance of the plan generation rate limiter.
+ */
 export const planRateLimiter = new TokenBucketRateLimiter(
   Number(process.env.RATE_LIMIT_MAX_REQUESTS || DEFAULT_CAPACITY),
   Number(process.env.RATE_LIMIT_WINDOW_SECONDS || 60) * 1000
@@ -77,6 +113,11 @@ export const planRateLimiter = new TokenBucketRateLimiter(
 
 /**
  * Extracts and sanitizes client IP address from proxy request headers.
+ * Supports `x-forwarded-for` and `x-real-ip` with strict alphanumeric/colon/dot validation.
+ *
+ * @param {Request} request - Next.js / Fetch API Request object.
+ * @returns {string} Sanitized client IP address string or fallback '127.0.0.1'.
+ * @throws {never} Handles missing or malformed headers safely.
  */
 export function extractClientIp(request: Request): string {
   const forwardedFor = request.headers.get('x-forwarded-for');

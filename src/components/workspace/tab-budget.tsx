@@ -8,6 +8,11 @@ import {
   generateCostRebalancingSuggestions,
 } from '@/lib/budget-engine';
 import {
+  BudgetStatCard,
+  BudgetStackedBar,
+  BudgetCategoryRow,
+} from '@/components/ui-sub';
+import {
   AlertTriangle,
   SlidersHorizontal,
   Info,
@@ -17,18 +22,13 @@ import {
   TrendingUp,
 } from 'lucide-react';
 
-const BAR_COLORS = [
-  'bg-amber-600 dark:bg-amber-500',
-  'bg-emerald-600 dark:bg-emerald-500',
-  'bg-cyan-600 dark:bg-cyan-400',
-  'bg-indigo-600 dark:bg-indigo-400',
-  'bg-teal-600 dark:bg-teal-400',
-  'bg-orange-600 dark:bg-orange-400',
-  'bg-blue-600 dark:bg-blue-400',
-  'bg-rose-600 dark:bg-rose-400',
-];
-
-export function TabBudget() {
+/**
+ * Primary Budget Engine tab view providing ledger tracking, category cap monitoring,
+ * visual allocation bars, and algorithmic cost-rebalancing suggestions.
+ *
+ * @returns {React.ReactElement | null} The rendered tab or null if no active plan.
+ */
+export function TabBudget(): React.ReactElement | null {
   const { activePlan, setIsReplanOpen, updateCategorySpent } = usePlan();
 
   const summary = useMemo(() => {
@@ -92,135 +92,48 @@ export function TabBudget() {
         </div>
       )}
 
-      {/* Summary KPI Cards */}
+      {/* Summary KPI Cards via Atomic Sub-Component */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="rounded-2xl border border-rule bg-paper-card p-5 shadow-xs">
-          <span className="text-[11px] font-mono uppercase text-ink-muted block mb-1">
-            Total Envelope
-          </span>
-          <div className="font-serif text-2xl font-bold text-ink">
-            {formatCurrency(summary.totalBudget, activePlan.currency)}
-          </div>
-          <span className="text-[11px] text-ink-faint mt-1 block">Declared by host</span>
-        </div>
-
-        <div className="rounded-2xl border border-rule bg-paper-card p-5 shadow-xs">
-          <span className="text-[11px] font-mono uppercase text-ink-muted block mb-1">
-            Category Subtotal
-          </span>
-          <div className="font-serif text-2xl font-bold text-ink">
-            {formatCurrency(summary.subtotalTarget, activePlan.currency)}
-          </div>
-          <span className="text-[11px] text-ink-faint mt-1 block">Direct services</span>
-        </div>
-
-        <div className="rounded-2xl border border-rule bg-paper-card p-5 shadow-xs">
-          <span className="text-[11px] font-mono uppercase text-ink-muted block mb-1">
-            Contingency ({summary.contingencyPercent}%)
-          </span>
-          <div className="font-serif text-2xl font-bold text-ink">
-            {formatCurrency(summary.contingencyAmount, activePlan.currency)}
-          </div>
-          <span className="text-[11px] text-ink-faint mt-1 block">Variance safety</span>
-        </div>
-
-        <div className="rounded-2xl border border-rule bg-paper-card p-5 shadow-xs">
-          <span className="text-[11px] font-mono uppercase text-ink-muted block mb-1">
-            Tax &amp; Service ({summary.taxServiceChargePercent}%)
-          </span>
-          <div className="font-serif text-2xl font-bold text-ink">
-            {formatCurrency(summary.taxServiceChargeAmount, activePlan.currency)}
-          </div>
-          <span className="text-[11px] text-ink-faint mt-1 block">Statutory GST &amp; fees</span>
-        </div>
-
-        <div className="rounded-2xl border border-rule bg-paper-card p-5 shadow-xs">
-          <span className="text-[11px] font-mono uppercase text-ink-muted block mb-1">
-            Actual Spent
-          </span>
-          <div className="font-serif text-2xl font-bold text-accent">
-            {formatCurrency(summary.totalActualSpent, activePlan.currency)}
-          </div>
-          <span className="text-[11px] text-ink-faint mt-1 block">Disbursed to vendors</span>
-        </div>
+        <BudgetStatCard
+          label="Total Envelope"
+          formattedValue={formatCurrency(summary.totalBudget, activePlan.currency)}
+          subtext="Declared by host"
+        />
+        <BudgetStatCard
+          label="Category Subtotal"
+          formattedValue={formatCurrency(summary.subtotalTarget, activePlan.currency)}
+          subtext="Direct services"
+        />
+        <BudgetStatCard
+          label={`Contingency (${summary.contingencyPercent}%)`}
+          formattedValue={formatCurrency(summary.contingencyAmount, activePlan.currency)}
+          subtext="Variance safety"
+        />
+        <BudgetStatCard
+          label={`Tax & Service (${summary.taxServiceChargePercent}%)`}
+          formattedValue={formatCurrency(summary.taxServiceChargeAmount, activePlan.currency)}
+          subtext="Statutory GST & fees"
+        />
+        <BudgetStatCard
+          label="Actual Spent"
+          formattedValue={formatCurrency(summary.totalActualSpent, activePlan.currency)}
+          subtext="Disbursed to vendors"
+          isAccent
+        />
       </div>
 
-      {/* Horizontal Stacked Bar Visualization */}
-      <div className="rounded-2xl border border-rule bg-paper-card p-6 shadow-xs">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-serif font-bold text-base sm:text-lg text-ink">
-            Allocation Distribution (Stacked Ledger Bar)
-          </h2>
-          <span className="text-xs font-mono font-bold">
-            {summary.isOverBudget ? (
-              <span className="text-state-error">100%+ Committed</span>
-            ) : (
-              <span className="text-state-success">
-                {Math.round((summary.totalCommitted / summary.totalBudget) * 100)}% Committed
-              </span>
-            )}
-          </span>
-        </div>
-
-        {/* Stacked Bar with accessible attributes */}
-        <div
-          role="progressbar"
-          aria-label="Category allocation distribution bar"
-          aria-valuenow={Math.round((summary.totalCommitted / summary.totalBudget) * 100)}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          className="h-6 w-full rounded-full bg-paper-subtle overflow-hidden flex shadow-inner"
-        >
-          {summary.categoryBreakdowns.map((item, idx) => {
-            const width = Math.min(100, Math.max(0, item.percentOfBudget));
-            if (width <= 0) return null;
-            return (
-              <div
-                key={item.id}
-                style={{ width: `${width}%` }}
-                title={`${item.name}: ${item.percentOfBudget}% (${formatCurrency(item.targetEstimate, activePlan.currency)})`}
-                className={`${BAR_COLORS[idx % BAR_COLORS.length]} h-full transition-all hover:opacity-80`}
-              />
-            );
-          })}
-          <div
-            style={{
-              width: `${Math.min(100, (summary.contingencyAmount / summary.totalBudget) * 100)}%`,
-            }}
-            title={`Contingency Buffer: ${formatCurrency(summary.contingencyAmount, activePlan.currency)}`}
-            className="bg-zinc-400 dark:bg-zinc-600 h-full hover:opacity-80"
-          />
-          <div
-            style={{
-              width: `${Math.min(100, (summary.taxServiceChargeAmount / summary.totalBudget) * 100)}%`,
-            }}
-            title={`Taxes & Fees: ${formatCurrency(summary.taxServiceChargeAmount, activePlan.currency)}`}
-            className="bg-zinc-500 dark:bg-zinc-700 h-full hover:opacity-80"
-          />
-        </div>
-
-        {/* Legend */}
-        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-ink-muted">
-          {summary.categoryBreakdowns.map((item, idx) => (
-            <div key={item.id} className="flex items-center gap-1.5">
-              <span
-                className={`h-2.5 w-2.5 rounded-full ${BAR_COLORS[idx % BAR_COLORS.length]}`}
-                aria-hidden="true"
-              />
-              <span className="font-medium text-ink">{item.name}</span>
-              <span className="text-ink-faint font-mono">({item.percentOfBudget}%)</span>
-            </div>
-          ))}
-          <div className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-zinc-400 dark:bg-zinc-600" aria-hidden="true" />
-            <span>Contingency ({summary.contingencyPercent}%)</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-zinc-500 dark:bg-zinc-700" aria-hidden="true" />
-            <span>Taxes &amp; Fees ({summary.taxServiceChargePercent}%)</span>
-          </div>
-        </div>
-      </div>
+      {/* Horizontal Stacked Bar Visualization via Atomic Sub-Component */}
+      <BudgetStackedBar
+        categoryBreakdowns={summary.categoryBreakdowns}
+        contingencyPercent={summary.contingencyPercent}
+        contingencyAmount={summary.contingencyAmount}
+        taxServiceChargePercent={summary.taxServiceChargePercent}
+        taxServiceChargeAmount={summary.taxServiceChargeAmount}
+        totalCommitted={summary.totalCommitted}
+        totalBudget={summary.totalBudget}
+        currency={activePlan.currency}
+        isOverBudget={summary.isOverBudget}
+      />
 
       {/* AI Cost-Rebalancing Suggestions */}
       <div className="rounded-2xl border border-accent/30 bg-accent-subtle/40 p-6 shadow-xs">
@@ -276,43 +189,20 @@ export function TabBudget() {
             </thead>
             <tbody className="divide-y divide-rule text-ink">
               {summary.categoryBreakdowns.map((cat) => (
-                <tr key={cat.id} className="hover:bg-paper-subtle/40 transition-colors">
-                  <td className="p-4 font-semibold text-ink">
-                    <div className="flex items-center gap-1.5">
-                      <span>{cat.name}</span>
-                      {cat.isOverCap && (
-                        <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-state-error/20 text-state-error font-bold">
-                          Cap Exceeded
-                        </span>
-                      )}
-                    </div>
-                  </td>
-                  <td className="p-4 text-right font-mono text-ink-muted">
-                    {formatCurrency(cat.minEstimate, activePlan.currency)}
-                  </td>
-                  <td className="p-4 text-right font-mono font-bold text-ink">
-                    {formatCurrency(cat.targetEstimate, activePlan.currency)}
-                  </td>
-                  <td className="p-4 text-right font-mono text-ink-muted">
-                    {cat.capLimit ? formatCurrency(cat.capLimit, activePlan.currency) : '—'}
-                  </td>
-                  <td className="p-4 text-right font-mono">
-                    <input
-                      type="number"
-                      aria-label={`Actual spend for ${cat.name}`}
-                      value={cat.actualSpent || ''}
-                      placeholder="0"
-                      onChange={(e) => updateCategorySpent(cat.id, Number(e.target.value) || 0)}
-                      className="w-24 text-right p-1 rounded border border-rule bg-paper text-ink font-mono focus:border-accent"
-                    />
-                  </td>
-                  <td className="p-4 text-right font-mono text-ink-muted">
-                    {cat.percentOfBudget}%
-                  </td>
-                  <td className="p-4 text-xs text-ink-muted max-w-xs leading-relaxed">
-                    {activePlan.budget.categories.find((c) => c.id === cat.id)?.notes || '—'}
-                  </td>
-                </tr>
+                <BudgetCategoryRow
+                  key={cat.id}
+                  id={cat.id}
+                  name={cat.name}
+                  isOverCap={cat.isOverCap}
+                  minEstimate={cat.minEstimate}
+                  targetEstimate={cat.targetEstimate}
+                  capLimit={cat.capLimit}
+                  actualSpent={cat.actualSpent}
+                  percentOfBudget={cat.percentOfBudget}
+                  notes={activePlan.budget.categories.find((c) => c.id === cat.id)?.notes}
+                  currency={activePlan.currency}
+                  onUpdateSpent={updateCategorySpent}
+                />
               ))}
 
               {/* Contingency Line */}

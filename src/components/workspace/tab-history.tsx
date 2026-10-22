@@ -4,7 +4,13 @@ import React from 'react';
 import { usePlan } from '../plan-context';
 import { History, Undo2, RotateCcw, Clock } from 'lucide-react';
 
-export function TabHistory() {
+/**
+ * Plan Version History and Undo tab allowing hosts to review immutable past snapshots
+ * and revert unintended budget modifications or schedule date shifts.
+ *
+ * @returns {React.ReactElement | null} The history dashboard element or null.
+ */
+export function TabHistory(): React.ReactElement | null {
   const { activePlan, planHistory, undoLastChange, setActivePlan, announce } = usePlan();
 
   if (!activePlan) return null;

@@ -3,7 +3,12 @@ import Link from 'next/link';
 import { AppShell } from '@/components/app-shell';
 import { HelpCircle, ArrowLeft } from 'lucide-react';
 
-export default function NotFound() {
+/**
+ * Accessible 404 Not Found error page.
+ *
+ * @returns {React.ReactElement} The 404 error view.
+ */
+export default function NotFound(): React.ReactElement {
   return (
     <AppShell>
       <div className="flex-1 flex flex-col items-center justify-center p-8 text-center max-w-md mx-auto">

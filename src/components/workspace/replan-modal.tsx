@@ -14,7 +14,13 @@ import {
   Sparkles,
 } from 'lucide-react';
 
-export function ReplanModal() {
+/**
+ * Accessible modal dialog enabling dynamic budget, guest count, and date replanning
+ * with side-by-side diff confirmation.
+ *
+ * @returns {React.ReactElement | null} The dialog element or null if closed.
+ */
+export function ReplanModal(): React.ReactElement | null {
   const { activePlan, isReplanOpen, setIsReplanOpen, setActivePlan, announce } = usePlan();
 
   const [proposedBudget, setProposedBudget] = useState<number>(activePlan?.totalBudget || 0);

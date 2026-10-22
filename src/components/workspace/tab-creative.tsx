@@ -17,7 +17,13 @@ import {
 
 type AssistantMode = 'invitation' | 'menu' | 'theme' | 'runOfShow';
 
-export function TabCreative() {
+/**
+ * Creative AI assistant tab component providing Server-Sent Events (SSE) streaming
+ * for invitations, banquet menus, aesthetic themes, and master run-of-shows.
+ *
+ * @returns {React.ReactElement | null} The creative assistant element or null.
+ */
+export function TabCreative(): React.ReactElement | null {
   const { activePlan, announce } = usePlan();
   const [mode, setMode] = useState<AssistantMode>('invitation');
   const [userNotes, setUserNotes] = useState('');

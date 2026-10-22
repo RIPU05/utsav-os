@@ -1,16 +1,31 @@
+/**
+ * @fileoverview Reusable API route helpers for client request validation,
+ * rate limit verification, and standardized JSON error formatting.
+ */
+
 import { NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 import { planRateLimiter, extractClientIp } from './ratelimit';
 import { GeminiApiError } from './gemini';
 
+/**
+ * Result returned by request safety checks.
+ */
 export interface SafetyCheckResult {
+  /** True if the request passes rate limiting and security gates */
   allowed: boolean;
+  /** Ready-to-return 429 response if rate limit was exceeded */
   response?: NextResponse;
+  /** Sanitized IP address of the client */
   clientIp: string;
 }
 
 /**
- * Checks client IP rate limit and rejects excessive requests with standard 429 response.
+ * Checks client IP rate limit and generates a standardized 429 response if exceeded.
+ *
+ * @param {Request} request - Incoming Next.js request.
+ * @returns {SafetyCheckResult} Status object indicating if execution should proceed.
+ * @throws {never} This safety wrapper never throws.
  */
 export function checkRequestSafety(request: Request): SafetyCheckResult {
   const clientIp = extractClientIp(request);
@@ -40,7 +55,12 @@ export function checkRequestSafety(request: Request): SafetyCheckResult {
 }
 
 /**
- * Standardized API error response handler.
+ * Standardized API error response handler that differentiates Zod validation errors,
+ * upstream Gemini API failures, and unexpected runtime exceptions.
+ *
+ * @param {unknown} err - Caught exception or rejection.
+ * @returns {NextResponse} Formatted JSON response with appropriate HTTP status code.
+ * @throws {never} Always succeeds in producing a response.
  */
 export function handleApiError(err: unknown): NextResponse {
   if (err instanceof ZodError) {

@@ -28,7 +28,13 @@ interface TabConfig {
   badge?: string;
 }
 
-export function WorkspaceHeader() {
+/**
+ * Workspace header component displaying active plan title, metadata badge strip,
+ * global action bar (Replan modal, CSV/JSON/ICS exports, Undo, Print), and navigation tab pills.
+ *
+ * @returns {React.ReactElement | null} The header element or null if no active plan.
+ */
+export function WorkspaceHeader(): React.ReactElement | null {
   const {
     activePlan,
     activeTab,
