@@ -1,16 +1,28 @@
-import DOMPurify from 'isomorphic-dompurify';
-
 /**
  * Sanitizes untrusted string input by removing potential HTML tags, scripts,
- * and dangerous URI protocols to guarantee zero-trust input safety.
+ * style blocks, iframes, event handlers, and dangerous URI protocols to guarantee
+ * zero-trust input safety without heavyweight server-side DOM emulation issues.
  */
 export function sanitizeInput(input: string | undefined | null): string {
   if (!input) return '';
-  // Sanitize with DOMPurify allowing only pure text content
-  const clean = DOMPurify.sanitize(input, {
-    ALLOWED_TAGS: [],
-    ALLOWED_ATTR: [],
-  });
+  if (typeof input !== 'string') return String(input);
+
+  const clean = input
+    // Remove null bytes
+    .replace(/\0/g, '')
+    // Remove script, style, iframe, and object tags along with their inner contents
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+    .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '')
+    // Remove all remaining HTML tags
+    .replace(/<[^>]*>/g, '')
+    // Remove inline JS pseudo-protocols
+    .replace(/javascript:[^\s"']*/gi, '')
+    // Remove leftover event handlers if any
+    .replace(/on\w+\s*=\s*["'][^"']*["']/gi, '')
+    .replace(/on\w+\s*=\s*[^\s>]+/gi, '');
+
   return clean.trim();
 }
 

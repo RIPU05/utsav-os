@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { PlanProvider } from '@/components/plan-context';
@@ -17,7 +17,12 @@ export const metadata: Metadata = {
     'vendor contract analysis',
   ],
   authors: [{ name: 'Utsav OS Engineering Team' }],
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#fbf9f5' },
     { media: '(prefers-color-scheme: dark)', color: '#09090b' },
