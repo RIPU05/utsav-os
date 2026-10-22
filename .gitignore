@@ -39,4 +39,8 @@ Thumbs.db
 !.vscode/extensions.json
 .idea
 
+# Local development and video recordings
 .vercel
+recordings/
+*.mp4
+*.webm
